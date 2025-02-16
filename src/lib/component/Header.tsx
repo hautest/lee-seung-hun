@@ -9,17 +9,20 @@ export function Header() {
         justify: "space-between",
         paddingY: "2",
         paddingX: "4",
+        position: "fixed",
+        top: 0,
+        width: "full",
       })}
     >
-      <StyledLink href="/">seung hun</StyledLink>
+      <StyledLink href="/">Seung Hun</StyledLink>
       <div
         className={flex({
           gap: "2",
         })}
       >
-        <StyledLink href="/about">about</StyledLink>
-        <StyledLink href="/resome">resome</StyledLink>
-        <StyledLink href="/blog">blog</StyledLink>
+        <StyledLink href="/about">About</StyledLink>
+        <StyledLink href="/resome">Resome</StyledLink>
+        <StyledLink href="/blog">Blog</StyledLink>
       </div>
     </header>
   );
@@ -31,6 +34,11 @@ const StyledLink = styled(Link, {
       color: "white",
       backgroundColor: "colorPalette.default",
     },
+    _active: {
+      color: "white",
+      backgroundColor: "colorPalette.default",
+    },
     p: "2",
+    fontWeight: "bold",
   },
 });
