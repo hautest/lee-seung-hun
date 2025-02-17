@@ -14,9 +14,21 @@ export default defineConfig({
   jsxStyleProps: "minimal",
   jsxFactory: "styled",
   globalCss: defineGlobalStyles({
-    "html, body": {
+    html: {
       height: "100%",
       width: "100%",
+      display: "flex",
+      justifyContent: "center",
+      backgroundColor: "neutral.1",
+    },
+    body: {
+      height: "100%",
+      width: "100%",
+      maxW: "1200px",
+      backgroundColor: "neutral.1",
+    },
+    "*": {
+      outlineColor: "neutral.12",
     },
   }),
 });

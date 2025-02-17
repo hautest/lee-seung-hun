@@ -11,21 +11,23 @@ const GITHUB_URL = "https://github.com/hautest";
 interface SocialLinkProps {
   children: ReactNode;
   href: string;
+  ariaLabel: string;
 }
 
-function SocialLink({ children, href }: SocialLinkProps) {
+function SocialLink({ children, href, ariaLabel }: SocialLinkProps) {
   return (
     <a
+      aria-label={ariaLabel}
       className={flex({
         fontSize: "0",
         p: "1",
         _hover: {
           color: "white",
-          backgroundColor: "colorPalette.default",
+          backgroundColor: "neutral.12",
         },
         _active: {
           color: "white",
-          backgroundColor: "colorPalette.default",
+          backgroundColor: "neutral.12",
         },
       })}
       href={href}
@@ -47,7 +49,7 @@ export function SocialLinks() {
         animationDuration: "5s",
       }}
     >
-      <SocialLink href={GITHUB_URL}>
+      <SocialLink href={GITHUB_URL} ariaLabel="깃허브로 바로가기">
         <Github
           className={css({
             w: "6",
@@ -55,7 +57,7 @@ export function SocialLinks() {
           })}
         />
       </SocialLink>
-      <SocialLink href={LINKEDIN_URL}>
+      <SocialLink href={LINKEDIN_URL} ariaLabel="링크드인으로 바로가기">
         <Linkedin
           className={css({
             w: "6",

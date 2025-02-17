@@ -12,6 +12,8 @@ export function Header() {
         position: "fixed",
         top: 0,
         width: "full",
+        maxW: "1200px",
+        backgroundColor: "neutral.1",
       })}
     >
       <StyledLink href="/">Seung Hun</StyledLink>
@@ -32,11 +34,11 @@ const StyledLink = styled(Link, {
   base: {
     _hover: {
       color: "white",
-      backgroundColor: "colorPalette.default",
+      backgroundColor: "neutral.12",
     },
     _active: {
       color: "white",
-      backgroundColor: "colorPalette.default",
+      backgroundColor: "neutral.12",
     },
     p: "2",
     fontWeight: "bold",
