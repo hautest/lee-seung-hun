@@ -2,6 +2,7 @@
   "name": "lee-seung-hun",
   "version": "0.1.0",
   "private": true,
+  "description": "https://lee-seung-hun.com",
   "scripts": {
     "dev": "rm -rf .next && next dev",
     "prepare": "panda codegen",
