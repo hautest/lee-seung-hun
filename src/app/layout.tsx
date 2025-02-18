@@ -30,7 +30,12 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Header />
         <main
-          className={css({ w: "full", p: "4", h: "full", paddingTop: "14" })}
+          className={css({
+            w: "full",
+            p: "4",
+            h: "full",
+            paddingTop: "14",
+          })}
         >
           {children}
         </main>

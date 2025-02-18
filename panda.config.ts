@@ -20,6 +20,7 @@ export default defineConfig({
       display: "flex",
       justifyContent: "center",
       backgroundColor: "neutral.1",
+      overflowY: "auto",
     },
     body: {
       height: "100%",

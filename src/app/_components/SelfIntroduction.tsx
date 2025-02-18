@@ -10,11 +10,11 @@ export function SelfIntroduction() {
       wrapper="h1"
       speed={30}
       className={css({
-        fontSize: "4xl",
+        fontSize: "3xl",
         fontWeight: "bold",
         whiteSpace: "pre-line",
         textAlign: "center",
-        h: "40",
+        h: "32",
       })}
       repeat={Infinity}
     />
