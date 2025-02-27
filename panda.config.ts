@@ -13,6 +13,15 @@ export default defineConfig({
   minify: true,
   jsxStyleProps: "minimal",
   jsxFactory: "styled",
+  theme: {
+    extend: {
+      breakpoints: {
+        mobile: "480px",
+        tablet: "768px",
+        desktop: "1024px",
+      },
+    },
+  },
   globalCss: defineGlobalStyles({
     html: {
       width: "full",
@@ -23,7 +32,7 @@ export default defineConfig({
     },
     body: {
       width: "full",
-      maxW: "1200px",
+      maxW: "1000px",
       backgroundColor: "neutral.1",
     },
     "*": {

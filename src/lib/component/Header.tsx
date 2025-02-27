@@ -25,7 +25,7 @@ export function Header() {
         position: "fixed",
         top: 0,
         width: "full",
-        maxW: "1200px",
+        maxW: "1000px",
         backgroundColor: "neutral.1",
       })}
     >

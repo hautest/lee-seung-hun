@@ -18,6 +18,13 @@ export default function HomePage() {
         top: "50%",
         transform: "translate(-50%, -50%)",
         gap: "6",
+        w: "full",
+        mobileDown: {
+          position: "initial",
+          left: "0",
+          top: "0",
+          transform: "translate(0, 0)",
+        },
       })}
     >
       <Image width={400} height={400} alt="" src="/assets/profile.jpeg" />
