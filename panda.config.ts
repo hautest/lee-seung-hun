@@ -15,16 +15,14 @@ export default defineConfig({
   jsxFactory: "styled",
   globalCss: defineGlobalStyles({
     html: {
-      height: "100%",
-      width: "100%",
+      width: "full",
       display: "flex",
       justifyContent: "center",
       backgroundColor: "neutral.1",
       overflowY: "auto",
     },
     body: {
-      height: "100%",
-      width: "100%",
+      width: "full",
       maxW: "1200px",
       backgroundColor: "neutral.1",
     },
