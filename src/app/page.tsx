@@ -2,6 +2,9 @@ import Image from "next/image";
 import { flex } from "styled-system/patterns";
 import { SelfIntroduction } from "./_components/SelfIntroduction";
 import { SocialLinks } from "./_components/SocialLinks";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {};
 
 export default function HomePage() {
   return (
@@ -10,7 +13,10 @@ export default function HomePage() {
         flexDir: "column",
         align: "center",
         justify: "center",
-        h: "full",
+        position: "fixed",
+        left: "50%",
+        top: "50%",
+        transform: "translate(-50%, -50%)",
         gap: "6",
       })}
     >

@@ -11,7 +11,6 @@ export function H1Content() {
         as="h1"
         css={{
           display: "inline",
-          w: "full",
           whiteSpace: "nowrap",
           fontWeight: "medium",
         }}
@@ -45,8 +44,8 @@ export function H1Content() {
         >
           라프텔
         </Text>
-        이라는 애니메이션 OTT 서비스에서 웹/앱을 개발하고 있습니다. 토스의
-        박서진님 같은 개발자가 되고 싶습니다.
+        에서 애니메이션 OTT 서비스의 웹과 앱 개발을 담당하며, 토스의 박서진님
+        같은 개발자가 되기 위해 꾸준히 노력하고 있습니다.
       </Text>
     </>
   );

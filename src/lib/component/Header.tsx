@@ -36,6 +36,7 @@ export function Header() {
         })}
       >
         <StyledLink
+          replace
           aria-current={isMatchUrl(ABOUT_URL) ? "page" : undefined}
           currentUrl={isMatchUrl(ABOUT_URL)}
           href={ABOUT_URL}
@@ -43,6 +44,7 @@ export function Header() {
           About
         </StyledLink>
         <StyledLink
+          replace
           aria-current={isMatchUrl(RESOME_URL) ? "page" : undefined}
           currentUrl={isMatchUrl(RESOME_URL)}
           href={RESOME_URL}
@@ -50,6 +52,7 @@ export function Header() {
           Resome
         </StyledLink>
         <StyledLink
+          replace
           aria-current={isMatchUrl(BLOG_URL) ? "page" : undefined}
           currentUrl={isMatchUrl(BLOG_URL)}
           href={BLOG_URL}
