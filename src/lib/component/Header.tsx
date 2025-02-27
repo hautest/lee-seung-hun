@@ -27,6 +27,7 @@ export function Header() {
         width: "full",
         maxW: "1000px",
         backgroundColor: "neutral.1",
+        zIndex: 2,
       })}
     >
       <StyledLink href="/">Seung Hun</StyledLink>
