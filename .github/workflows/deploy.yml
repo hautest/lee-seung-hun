@@ -31,6 +31,11 @@ jobs:
       - name: install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: generate env file
+        run: |
+          echo "NEXT_PUBLIC_NOTION_DATABASE_ID=${{ env.NEXT_PUBLIC_NOTION_DATABASE_ID }}" >> .env
+          echo "NEXT_PUBLIC_NOTION_API_KEY=${{ env.NEXT_PUBLIC_NOTION_API_KEY }}" >> .env
+
       - name: build
         run: pnpm build
 
