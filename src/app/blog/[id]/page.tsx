@@ -1,5 +1,11 @@
+import { getBlogList } from "@/lib/notion/getBlogList";
+
 export async function generateStaticParams() {
-  return [{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }];
+  const blogList = await getBlogList();
+
+  return blogList.map((blog) => ({
+    id: blog?.id,
+  }));
 }
 
 export default async function BlogDetailPage({
