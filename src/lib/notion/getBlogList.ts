@@ -1,6 +1,6 @@
 import { isFullPage } from "@notionhq/client";
 import { notion } from "./notion";
-import { BlogItem, Tag } from "../types/PageList";
+import { BlogItem, Tag } from "../types/Blog";
 
 interface GetBlogListParams {
   pageSize?: number;

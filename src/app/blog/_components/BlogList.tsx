@@ -1,5 +1,5 @@
 import { getBlogList } from "@/lib/notion/getBlogList";
-import { BlogItem as BlogItemType } from "@/lib/types/PageList";
+import { BlogItem as BlogItemType } from "@/lib/types/Blog";
 import Link from "next/link";
 import { flex } from "styled-system/patterns";
 import Image from "next/image";
@@ -42,15 +42,17 @@ function BlogItem({
         },
       })}
     >
-      <Image
-        src={thumbnail || ""}
-        alt={title || ""}
-        width={IMAGE_SIZE}
-        height={IMAGE_SIZE}
-        className={css({
-          objectFit: "contain",
-        })}
-      />
+      <div className={css({ w: IMAGE_SIZE, h: IMAGE_SIZE, flexShrink: 0 })}>
+        <Image
+          src={thumbnail || ""}
+          alt={title || ""}
+          width={IMAGE_SIZE}
+          height={IMAGE_SIZE}
+          className={css({
+            objectFit: "contain",
+          })}
+        />
+      </div>
       <div className={flex({ direction: "column" })}>
         <Text
           as="h2"

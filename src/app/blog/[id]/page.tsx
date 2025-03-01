@@ -1,3 +1,5 @@
+import { BlogContentRender } from "@/app/blog/[id]/_components/BlogContentRender";
+import { getBlog } from "@/lib/notion/getBlog";
 import { getBlogList } from "@/lib/notion/getBlogList";
 
 export async function generateStaticParams() {
@@ -8,6 +10,20 @@ export async function generateStaticParams() {
   }));
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const { metadata } = await getBlog(id);
+
+  return {
+    title: metadata.title,
+    description: metadata.description,
+  };
+}
+
 export default async function BlogDetailPage({
   params,
 }: {
@@ -15,5 +31,7 @@ export default async function BlogDetailPage({
 }) {
   const { id } = await params;
 
-  return <div>BlogDetail {id}</div>;
+  const { content } = await getBlog(id);
+
+  return <BlogContentRender content={content} />;
 }
