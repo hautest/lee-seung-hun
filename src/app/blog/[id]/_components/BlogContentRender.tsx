@@ -4,7 +4,6 @@ import Image from "next/image";
 import { createNotionImageUrl } from "@/lib/notion/createImageUrl";
 import { css } from "styled-system/css";
 import { Text } from "@/lib/ui/Text";
-import { Children } from "react";
 import { CodeViewer } from "./CodeViewer";
 
 const IMAGE_SIZE = 300;
@@ -14,6 +13,7 @@ const SPACE = {
   lg: "8",
   md: "6",
   sm: "4",
+  xs: "2",
 };
 
 interface BlogContentRenderProps {
@@ -54,6 +54,24 @@ export async function BlogContentRender({ content }: BlogContentRenderProps) {
             {children}
           </Text>
         ),
+        h4: ({ children }) => (
+          <Text
+            as="h4"
+            css={{ fontWeight: "bold", marginY: SPACE.xs }}
+            size="lg"
+          >
+            {children}
+          </Text>
+        ),
+        h5: ({ children }) => (
+          <Text
+            as="h5"
+            css={{ fontWeight: "bold", marginY: SPACE.xs }}
+            size="lg"
+          >
+            {children}
+          </Text>
+        ),
         hr: () => (
           <hr
             className={css({
@@ -82,26 +100,18 @@ export async function BlogContentRender({ content }: BlogContentRenderProps) {
           </Text>
         ),
         li: ({ children }) => {
-          return Children.toArray(children).map((child, index) => {
-            if (child === " " || child === "\n") {
-              return null;
-            }
-
-            return (
-              <Text
-                key={`${child}${index}`}
-                as="li"
-                size="md"
-                css={{
-                  listStylePosition: "inside",
-                  textIndent: "1.5",
-                  marginLeft: typeof child === "string" ? "0" : "6",
-                }}
-              >
-                {child}
-              </Text>
-            );
-          });
+          return (
+            <Text
+              as="li"
+              size="md"
+              css={{
+                listStylePosition: "inside",
+                textIndent: "1.5",
+              }}
+            >
+              {children}
+            </Text>
+          );
         },
         img: ({ src, alt: _alt, ...rest }) => {
           const [blockId, alt] = _alt!.split(":");
