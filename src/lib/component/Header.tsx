@@ -75,6 +75,10 @@ const StyledLink = styled(Link, {
       color: "white",
       backgroundColor: "neutral.12",
     },
+    _focus: {
+      color: "white",
+      backgroundColor: "neutral.12",
+    },
     p: "2",
     fontWeight: "bold",
   },

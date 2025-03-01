@@ -29,6 +29,10 @@ function SocialLink({ children, href, ariaLabel }: SocialLinkProps) {
           color: "white",
           backgroundColor: "neutral.12",
         },
+        _focus: {
+          color: "white",
+          backgroundColor: "neutral.12",
+        },
       })}
       href={href}
       target="_blank"
