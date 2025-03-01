@@ -19,7 +19,7 @@ export async function generateMetadata({
   const { metadata } = await getBlog(id);
 
   return {
-    title: metadata.title,
+    title: `${metadata.title} - 프론트엔드 개발자 이승훈 블로그`,
     description: metadata.description,
   };
 }

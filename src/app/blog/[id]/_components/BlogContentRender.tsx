@@ -8,6 +8,7 @@ import { Children } from "react";
 import { CodeViewer } from "./CodeViewer";
 
 const IMAGE_SIZE = 300;
+const SPACE_SIGNAL = "::$SPACE";
 
 const SPACE = {
   lg: "8",
@@ -26,7 +27,10 @@ export async function BlogContentRender({ content }: BlogContentRenderProps) {
         h1: ({ children }) => (
           <Text
             as="h1"
-            css={{ fontWeight: "bold", marginY: SPACE.lg }}
+            css={{
+              fontWeight: "bold",
+              marginY: SPACE.lg,
+            }}
             size="3xl"
           >
             {children}
@@ -121,7 +125,14 @@ export async function BlogContentRender({ content }: BlogContentRenderProps) {
             />
           );
         },
-        p: ({ children }) => <Text size="md">{children}</Text>,
+        p: ({ children }) => {
+          //줄바꿈 처리
+          if (children === SPACE_SIGNAL) {
+            return <Text size="md" css={{ marginBottom: "1.5rem" }} />;
+          }
+
+          return <Text size="md">{children}</Text>;
+        },
         code: ({ children }) => {
           return <CodeViewer>{children as string}</CodeViewer>;
         },

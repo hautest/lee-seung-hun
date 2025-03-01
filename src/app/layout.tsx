@@ -18,6 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "프론트엔드 개발자 이승훈",
   description: "프론트엔드 개발자 이승훈 사이트",
+  verification: {
+    google: "Zea8OLlCQecuBqiK38rEVDUU13elQZPRvJANSeIr",
+  },
 };
 
 export default function RootLayout({
