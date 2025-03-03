@@ -24,7 +24,7 @@ export async function getBlogList(params?: GetBlogListParams) {
     (result) => {
       if (isFullPage(result)) {
         if (
-          result.properties.id.type === "unique_id" &&
+          result.properties.id.type === "number" &&
           result.properties.title.type === "title" &&
           result.properties.description.type === "rich_text" &&
           result.properties.thumbnail.type === "files" &&
