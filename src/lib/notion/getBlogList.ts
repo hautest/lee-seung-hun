@@ -20,8 +20,16 @@ export async function getBlogList(params?: GetBlogListParams) {
     page_size: pageSize,
   });
 
-  const pageList: (BlogItem | undefined)[] | undefined = results.map(
-    (result) => {
+  console.log(results);
+
+  const pageList: (BlogItem | undefined)[] | undefined = results
+    .filter(
+      (result) =>
+        isFullPage(result) &&
+        result.properties.publish.type === "checkbox" &&
+        result.properties.publish.checkbox
+    )
+    .map((result) => {
       if (isFullPage(result)) {
         if (
           result.properties.id.type === "number" &&
@@ -43,15 +51,7 @@ export async function getBlogList(params?: GetBlogListParams) {
           };
         }
       }
-    }
-  );
+    });
 
   return pageList;
 }
-
-// if (result.properties.id.type === "unique_id") {
-// }
-
-//UniqueIdDatabasePropertyConfigResponse
-
-//UniqueIdPropertyItemObjectResponse
