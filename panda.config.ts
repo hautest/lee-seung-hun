@@ -20,6 +20,16 @@ export default defineConfig({
         tablet: "768px",
         desktop: "1024px",
       },
+      tokens: {
+        spacing: {
+          "safe-top": {
+            value: "env(safe-area-inset-top)",
+          },
+          "safe-bottom": {
+            value: "env(safe-area-inset-bottom)",
+          },
+        },
+      },
     },
   },
   globalCss: defineGlobalStyles({

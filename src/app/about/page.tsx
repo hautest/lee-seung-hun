@@ -4,7 +4,7 @@ import { H1Content } from "./_components/H1Title";
 
 export default function AboutPage() {
   return (
-    <div className={flex({ flexDir: "column", gap: "4" })}>
+    <div className={flex({ flexDir: "column", gap: "4", paddingBottom: "4" })}>
       <H1Content />
       <ContentList title="이런일에 관심이 많아요.">
         <ContentList.Item>

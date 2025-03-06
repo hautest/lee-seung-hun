@@ -35,9 +35,10 @@ export default function RootLayout({
         <main
           className={css({
             w: "full",
-            p: "4",
             h: "full",
             paddingTop: "14",
+            paddingBottom: "safe-bottom",
+            px: "4",
           })}
         >
           {children}

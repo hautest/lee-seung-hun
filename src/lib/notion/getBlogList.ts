@@ -20,8 +20,6 @@ export async function getBlogList(params?: GetBlogListParams) {
     page_size: pageSize,
   });
 
-  console.log(results);
-
   const pageList: (BlogItem | undefined)[] | undefined = results
     .filter(
       (result) =>
