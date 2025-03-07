@@ -47,6 +47,7 @@ export default defineConfig({
     },
     "*": {
       outlineColor: "neutral.12",
+      boxSizing: "border-box",
     },
   }),
 });
