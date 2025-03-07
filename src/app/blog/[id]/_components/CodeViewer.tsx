@@ -6,7 +6,22 @@ import { githubLight } from "@uiw/codemirror-theme-github";
 import { css } from "styled-system/css";
 import { Copy, Check } from "lucide-react";
 import { Button } from "@/lib/ui/Button";
-import { useState } from "react";
+import { PropsWithChildren, useState } from "react";
+
+const Skeleton = ({ children }: PropsWithChildren) => {
+  return (
+    <div
+      className={css({
+        fontSize: "13px",
+        lineHeight: "18.2px",
+        paddingBottom: "22.2px",
+        paddingTop: "4px",
+      })}
+    >
+      {children}
+    </div>
+  );
+};
 
 interface CopyButtonProps {
   content: string;
@@ -40,10 +55,17 @@ interface CodeViewerProps {
 }
 
 export function CodeViewer({ children }: CodeViewerProps) {
+  const [isLoaded, setIsLoaded] = useState(false);
+
   return (
     <div className={css({ position: "relative", marginY: "4" })}>
       <CopyButton content={children} />
+      {!isLoaded && <Skeleton>{children}</Skeleton>}
       <ReactCodeMirror
+        onCreateEditor={() => setIsLoaded(true)}
+        basicSetup={{
+          foldGutter: false,
+        }}
         editable={false}
         extensions={[
           javascript({
