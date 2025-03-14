@@ -31,7 +31,7 @@ export function Header() {
       })}
     >
       <StyledLink href="/">Seung Hun</StyledLink>
-      <div
+      <nav
         className={flex({
           gap: "2",
         })}
@@ -60,7 +60,7 @@ export function Header() {
         >
           Blog
         </StyledLink>
-      </div>
+      </nav>
     </header>
   );
 }
