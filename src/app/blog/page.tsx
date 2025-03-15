@@ -1,6 +1,7 @@
 import { Text } from "@/lib/ui/Text";
 import { flex } from "styled-system/patterns";
 import { BlogList } from "./_components/BlogList";
+
 export default async function BlogPage() {
   return (
     <div className={flex({ direction: "column", gap: "8", w: "full" })}>

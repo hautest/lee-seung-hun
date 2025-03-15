@@ -6,7 +6,7 @@ import { styled } from "styled-system/jsx";
 import { flex } from "styled-system/patterns";
 
 const ABOUT_URL = "/about";
-const RESOME_URL = "/resome";
+const RESUME_URL = "/resume";
 const BLOG_URL = "/blog";
 
 export function Header() {
@@ -46,11 +46,11 @@ export function Header() {
         </StyledLink>
         <StyledLink
           replace
-          aria-current={isMatchUrl(RESOME_URL) ? "page" : undefined}
-          currentUrl={isMatchUrl(RESOME_URL)}
-          href={RESOME_URL}
+          aria-current={isMatchUrl(RESUME_URL) ? "page" : undefined}
+          currentUrl={isMatchUrl(RESUME_URL)}
+          href={RESUME_URL}
         >
-          Resome
+          Resume
         </StyledLink>
         <StyledLink
           replace
