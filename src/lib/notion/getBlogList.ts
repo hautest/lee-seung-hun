@@ -27,7 +27,7 @@ export async function getBlogList(params?: GetBlogListParams) {
         result.properties.publish.type === "checkbox" &&
         result.properties.publish.checkbox
     )
-    .map((result) => {
+    .map<BlogItem | undefined>((result) => {
       if (isFullPage(result)) {
         if (
           result.properties.id.type === "number" &&
@@ -35,10 +35,11 @@ export async function getBlogList(params?: GetBlogListParams) {
           result.properties.description.type === "rich_text" &&
           result.properties.thumbnail.type === "files" &&
           result.properties.thumbnail.files[0].type === "file" &&
-          result.properties.tags.type === "multi_select"
+          result.properties.tags.type === "multi_select" &&
+          result.properties.publishDate.type === "date"
         ) {
           return {
-            createdTime: result.created_time,
+            publishDate: result.properties.publishDate.date?.start,
             id: result.id,
             title: result.properties.title.title[0].plain_text,
             description: result.properties.description.rich_text[0].plain_text,

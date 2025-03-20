@@ -11,7 +11,7 @@ import dayjs from "dayjs";
 const IMAGE_SIZE = 150;
 
 function BlogItem({
-  createdTime: _createdTime,
+  publishDate,
   description,
   id,
   thumbnail,
@@ -19,7 +19,7 @@ function BlogItem({
 }: BlogItemType) {
   const titleId = `blog-item-title-${id}`;
   const descriptionId = `blog-item-desc-${id}`;
-  const createdTime = dayjs(_createdTime).format("YYYY-MM-DD");
+  const createdTime = dayjs(publishDate).format("YYYY-MM-DD");
 
   return (
     <Link

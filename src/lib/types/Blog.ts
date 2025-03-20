@@ -11,5 +11,5 @@ export interface BlogItem {
   description?: string;
   thumbnail?: string;
   tags?: Tag[];
-  createdTime?: string;
+  publishDate?: string;
 }
