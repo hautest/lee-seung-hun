@@ -64,7 +64,12 @@ function BlogItem({
         </Text>
         <Text
           as="p"
-          css={{ color: "neutral.11", marginBottom: "4" }}
+          css={{
+            color: "neutral.11",
+            marginBottom: "4",
+            wordBreak: "break-word",
+            whiteSpace: "normal",
+          }}
           id={descriptionId}
           size="sm"
         >
