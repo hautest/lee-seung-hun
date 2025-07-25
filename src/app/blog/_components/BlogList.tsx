@@ -85,7 +85,7 @@ function BlogItem({
 
 export async function BlogList() {
   //TODO: 페이지네이션 추가
-  const blogList = await getBlogList({ pageSize: 100 });
+  const blogList = await getBlogList();
 
   return (
     <ul className={flex({ w: "full", direction: "column" })}>
