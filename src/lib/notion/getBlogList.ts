@@ -7,7 +7,7 @@ interface GetBlogListParams {
 }
 
 export async function getBlogList(params?: GetBlogListParams) {
-  const { pageSize = 10 } = params || {};
+  const { pageSize } = params || {};
 
   const { results } = await notion.databases.query({
     database_id: process.env.NEXT_PUBLIC_NOTION_DATABASE_ID as string,
