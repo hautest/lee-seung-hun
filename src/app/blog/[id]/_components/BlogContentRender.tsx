@@ -1,12 +1,10 @@
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import Image from "next/image";
-import { createNotionImageUrl } from "@/lib/notion/createImageUrl";
 import { css } from "styled-system/css";
 import { Text } from "@/lib/ui/Text";
 import { CodeViewer } from "./CodeViewer";
+import { ExpandableImage } from "./ExpandableImage";
 
-const IMAGE_SIZE = 300;
 const SPACE_SIGNAL = "::$SPACE";
 
 const SPACE = {
@@ -113,27 +111,10 @@ export async function BlogContentRender({ content }: BlogContentRenderProps) {
             </Text>
           );
         },
-        img: ({ src, alt: _alt, ...rest }) => {
+        img: ({ src, alt: _alt }) => {
           const [blockId, alt] = _alt!.split(":");
 
-          return (
-            <Image
-              {...rest}
-              className={css({
-                display: "block",
-                margin: "0 auto",
-                marginBottom: SPACE.sm,
-              })}
-              alt={alt || ""}
-              src={createNotionImageUrl({
-                fileUrl: src || "",
-                width: IMAGE_SIZE,
-                id: blockId,
-              })}
-              width={IMAGE_SIZE}
-              height={IMAGE_SIZE}
-            />
-          );
+          return <ExpandableImage src={src} alt={alt} blockId={blockId} />;
         },
         p: ({ children }) => {
           //줄바꿈 처리
