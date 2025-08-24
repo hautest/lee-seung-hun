@@ -26,7 +26,10 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
+      <head>
+        <meta name="google-adsense-account" content="ca-pub-6430649463590330" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Header />
         <main
