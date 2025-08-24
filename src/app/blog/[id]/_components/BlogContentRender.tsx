@@ -114,7 +114,9 @@ export async function BlogContentRender({ content }: BlogContentRenderProps) {
         img: ({ src, alt: _alt }) => {
           const [blockId, alt] = _alt!.split(":");
 
-          return <ExpandableImage src={src} alt={alt} blockId={blockId} />;
+          return (
+            <ExpandableImage src={src as string} alt={alt} blockId={blockId} />
+          );
         },
         p: ({ children }) => {
           //줄바꿈 처리

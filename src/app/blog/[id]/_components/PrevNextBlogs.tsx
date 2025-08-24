@@ -1,7 +1,7 @@
 import { BlogItem } from "@/lib/types/Blog";
 import { Text } from "@/lib/ui/Text";
 import Link from "next/link";
-import { styled } from "styled-system/jsx";
+import { cva } from "styled-system/css";
 import { flex } from "styled-system/patterns";
 
 interface PrevNextBlogsProps {
@@ -26,26 +26,36 @@ export function PrevNextBlogs({ prevBlog, nextBlog }: PrevNextBlogsProps) {
       })}
     >
       {prevBlog && (
-        <StyledLink marginRightHalf={!nextBlog} href={`/blog/${prevBlog.id}`}>
+        <Link
+          className={styledLink({
+            marginRightHalf: !nextBlog,
+          })}
+          href={`/blog/${prevBlog.id}`}
+        >
           <Text size="sm" css={{ w: "full" }}>
             이전글
           </Text>
           <Text size="lg">{prevBlog.title}</Text>
-        </StyledLink>
+        </Link>
       )}
       {nextBlog && (
-        <StyledLink marginLeftHalf={!prevBlog} href={`/blog/${nextBlog.id}`}>
+        <Link
+          className={styledLink({
+            marginLeftHalf: !prevBlog,
+          })}
+          href={`/blog/${nextBlog.id}`}
+        >
           <Text size="sm" css={{ w: "full" }}>
             다음글
           </Text>
           <Text size="lg">{nextBlog.title}</Text>
-        </StyledLink>
+        </Link>
       )}
     </div>
   );
 }
 
-const StyledLink = styled(Link, {
+const styledLink = cva({
   base: {
     _hover: {
       color: "white",

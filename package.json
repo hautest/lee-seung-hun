@@ -4,10 +4,10 @@
   "private": true,
   "description": "https://lee-seung-hun.com",
   "scripts": {
-    "dev": "rm -rf .next && next dev",
+    "dev": "rm -rf .next && next dev --turbopack",
     "prepare": "panda codegen",
     "postbuild": "next-sitemap",
-    "build": "panda codegen && next build",
+    "build": "panda codegen && next build --turbopack",
     "start": "http-server ./out -p 3000",
     "lint": "next lint"
   },
@@ -20,10 +20,10 @@
     "@uiw/react-codemirror": "^4.23.10",
     "dayjs": "^1.11.13",
     "lucide-react": "^0.475.0",
-    "next": "15.1.7",
+    "next": "15.5.0",
     "notion-to-md": "^3.1.6",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
     "react-markdown": "^10.0.0",
     "react-pdf": "^9.2.1",
     "react-type-animation": "^3.2.0",
@@ -31,16 +31,22 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@pandacss/dev": "^0.53.0",
+    "@pandacss/dev": "^1.1.0",
     "@park-ui/panda-preset": "^0.43.1",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "19.1.11",
+    "@types/react-dom": "19.1.7",
     "eslint": "^9",
-    "eslint-config-next": "15.1.7",
+    "eslint-config-next": "15.5.0",
     "http-server": "^14.1.1",
     "next-sitemap": "^4.2.3",
     "typescript": "^5"
   },
-  "packageManager": "pnpm@8.15.9+sha512.499434c9d8fdd1a2794ebf4552b3b25c0a633abcee5bb15e7b5de90f32f47b513aca98cd5cfd001c31f0db454bc3804edccd578501e4ca293a6816166bbd9f81"
+  "packageManager": "pnpm@8.15.9+sha512.499434c9d8fdd1a2794ebf4552b3b25c0a633abcee5bb15e7b5de90f32f47b513aca98cd5cfd001c31f0db454bc3804edccd578501e4ca293a6816166bbd9f81",
+  "pnpm": {
+    "overrides": {
+      "@types/react": "19.1.11",
+      "@types/react-dom": "19.1.7"
+    }
+  }
 }
