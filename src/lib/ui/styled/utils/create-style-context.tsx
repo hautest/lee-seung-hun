@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
   type ElementType,
   type ForwardRefExoticComponent,
@@ -30,7 +29,6 @@ const shouldForwardProp = (
 export const createStyleContext = <R extends Recipe>(recipe: R) => {
   const StyleContext = createContext<Record<Slot<R>, string> | null>(null);
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   const withRootProvider = <P extends {}>(Component: ElementType) => {
     const StyledComponent = (props: P) => {
       const [variantProps, otherProps] = recipe.splitVariantProps(props);

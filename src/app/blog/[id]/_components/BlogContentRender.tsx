@@ -4,6 +4,7 @@ import { css } from "styled-system/css";
 import { Text } from "@/lib/ui/Text";
 import { CodeViewer } from "./CodeViewer";
 import { ExpandableImage } from "./ExpandableImage";
+import { Table } from "@/lib/ui/table";
 
 const SPACE_SIGNAL = "::$SPACE";
 
@@ -160,6 +161,26 @@ export async function BlogContentRender({ content }: BlogContentRenderProps) {
           >
             {children}
           </Text>
+        ),
+        table: ({ children }) => (
+          <div className={css({ overflowX: "auto", width: "100%" })}>
+            <Table.Root css={{ minWidth: "max-content" }}>
+              {children}
+            </Table.Root>
+          </div>
+        ),
+        thead: ({ children }) => <Table.Head>{children}</Table.Head>,
+        tbody: ({ children }) => <Table.Body>{children}</Table.Body>,
+        tr: ({ children }) => <Table.Row>{children}</Table.Row>,
+        td: ({ children }) => (
+          <Table.Cell css={{ whiteSpace: "nowrap", padding: "2" }}>
+            {children}
+          </Table.Cell>
+        ),
+        th: ({ children }) => (
+          <Table.Header css={{ whiteSpace: "nowrap", padding: "2" }}>
+            {children}
+          </Table.Header>
         ),
       }}
       remarkPlugins={[remarkGfm]}
