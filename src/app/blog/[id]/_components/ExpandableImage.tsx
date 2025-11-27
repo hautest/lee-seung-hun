@@ -12,8 +12,8 @@ const SPACE = {
 };
 
 const IMAGE_SIZE = {
-  unExpanded: 300,
-  expanded: 700,
+  unExpanded: 600,
+  expanded: 800,
 };
 
 interface ExpandableImageProps {
