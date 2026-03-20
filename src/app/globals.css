@@ -1,1 +1,33 @@
 @layer reset, base, tokens, recipes, utilities;
+
+@media print {
+  header,
+  nav {
+    display: none !important;
+  }
+
+  main {
+    padding: 0 !important;
+  }
+
+  body {
+    background: white !important;
+    max-width: none !important;
+  }
+
+  html {
+    background: white !important;
+  }
+
+  #resume-content {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    max-width: none !important;
+    padding: 40px 60px !important;
+  }
+
+  @page {
+    margin: 10mm;
+    size: A4;
+  }
+}

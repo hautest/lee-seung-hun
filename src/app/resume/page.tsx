@@ -2,9 +2,10 @@ import { Text } from "@/lib/ui/Text";
 import { DownloadButton } from "./_components/DownloadButton";
 import { flex } from "styled-system/patterns";
 import { Divider } from "styled-system/jsx";
-import { Resume } from "./_components/Resume";
+import { ResumeContent } from "./_components/ResumeContent";
 import { Metadata } from "next";
-import { PreviewButton } from "./_components/PreviewButton";
+import { readFileSync } from "fs";
+import { join } from "path";
 
 export const metadata: Metadata = {
   title: "프론트엔드 개발자 이승훈 이력서",
@@ -13,19 +14,29 @@ export const metadata: Metadata = {
 };
 
 export default function ResumePage() {
+  const content = readFileSync(
+    join(process.cwd(), "public", "resume.md"),
+    "utf-8"
+  );
+
   return (
-    <div className={flex({ flexDir: "column", gap: "4" })}>
-      <div className={flex({ flexDir: "column", gap: "4" })}>
+    <div className={flex({ flexDir: "column", gap: "4", pb: "16" })}>
+      <div
+        className={flex({
+          flexDir: "column",
+          gap: "4",
+          _print: { display: "none" },
+        })}
+      >
         <Text as="h1" css={{ fontWeight: "bold" }} size="xl">
           프론트엔드 개발자 이승훈 이력서
         </Text>
         <div className={flex({ gap: "4", w: "full", justify: "center" })}>
           <DownloadButton />
-          <PreviewButton />
         </div>
         <Divider />
       </div>
-      <Resume />
+      <ResumeContent content={content} />
     </div>
   );
 }
