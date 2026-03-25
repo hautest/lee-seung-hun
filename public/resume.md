@@ -21,13 +21,15 @@
 ### 오픈소스
 
 - [TanStack/query](https://github.com/TanStack/query)
-  - [useSuspenseQueries와 useSuspenseInfiniteQuery에 skipToken 사용 시 에러 메시지 추가](https://github.com/TanStack/query/pull/0)
+  - [useSuspenseQueries와 useSuspenseInfiniteQuery에 skipToken 사용 시 에러 메시지 추가](https://github.com/TanStack/query/pull/7797)
 - [toss/es-toolkit](https://github.com/toss/es-toolkit)
-  - [zipObject 기능 개발](https://github.com/toss/es-toolkit/pull/0)
-  - [tail 기능 개발](https://github.com/toss/es-toolkit/pull/0)
-  - [head 기능 개발](https://github.com/toss/es-toolkit/pull/0)
+  - [zipObject 기능 개발](https://github.com/toss/es-toolkit/pull/92)
+  - [tail 기능 개발](https://github.com/toss/es-toolkit/pull/143)
+  - [head 기능 개발](https://github.com/toss/es-toolkit/pull/131)
 - [resend/react-email](https://github.com/resend/react-email)
-  - [cli utils 오타 수정](https://github.com/resend/react-email/pull/0)
+  - [cli utils 오타 수정](https://github.com/resend/react-email/pull/1918)
+- [react-email-handlebars](https://github.com/hautest/react-email-handlebars)
+  - react-email과 호환 가능한 Handlebars 컴포넌트 라이브러리 개발
 
 ## 경력
 
@@ -42,6 +44,13 @@
   - 스켈레톤 UI를 컴포넌트 단위로 분리하고, API 요청을 병렬화하여 응답 순서대로 화면에 렌더링하도록 개선하였습니다.
   - 첫 콜렉션 표시 시간을 평균 2500ms에서 303ms로 약 88% 단축하였습니다.
 
+#### 번들 사이즈 최적화
+
+- 웹 서비스의 번들 사이즈를 최적화하였습니다.
+  - SVG를 Sprite SVG로 전환하고, 사용하지 않는 패키지를 정리하며, 코드 스플리팅을 적용하였습니다.
+  - Client JS 번들을 6.69MB에서 6.35MB로 약 5.08% 감소시켰습니다.
+  - Server JS 번들을 5.88MB에서 5.59MB로 약 4.93% 감소시켰습니다.
+
 #### 인앱결제 리팩토링
 
 - iOS/Android 플랫폼별로 분리되어 4곳에 분산된 인앱결제(멤버십, 포인트) 로직을 단일 모듈(features/iap)로 통합하였습니다.
@@ -55,6 +64,12 @@
   - next build 시 type 및 lint 체크를 생략하여 불필요한 빌드 시간을 단축했습니다.
   - type 및 lint 검사는 Git Action에서 별도로 실행하여 안정성을 유지하였습니다.
   - node_modules 캐싱 시간을 분석한 결과, 캐싱 처리 시간이 새로 설치하는 시간보다 오래 걸리는 것을 확인하여 불필요한 캐싱을 제거했습니다.
+- Claude Code를 활용한 AI 기반 개발 환경을 구축하여 팀의 생산성을 향상시켰습니다.
+  - 프로젝트에 맞는 CLAUDE.md 및 docs를 구상하고 구축하였습니다.
+  - Figma MCP를 연동하여 현재 코드베이스의 컨벤션을 따르는 디자인 구현 스킬을 개발하였습니다.
+  - Jira MCP를 연동하여 이슈 기반 개발 요청을 한번에 처리할 수 있도록 자동화하였습니다.
+  - GitHub CLI를 활용한 코드 리뷰 반영 스킬을 개발하여, PR에 올라온 리뷰를 우선순위별로 정리하고 반영하는 프로세스를 구축하였습니다.
+  - Figma MCP와 Playwright MCP를 결합한 디자인 검수 스킬을 개발하여, 수치 비교뿐만 아니라 스크린샷 기반 정밀 비교 프로세스를 구축하였습니다.
 
 #### 사내 레거시 프로젝트 개선
 
@@ -116,4 +131,3 @@
 
 - [깃허브](https://github.com/hautest)
 - [개인 사이트](https://lee-seung-hun.com)
-- [이전 블로그 (현재는 개인 사이트로 옮겼습니다.)](https://lee-seung-hun.com/blog)
