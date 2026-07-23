@@ -43,7 +43,7 @@ export async function getGameList(): Promise<GameItem[] | null> {
     throw error;
   }
 
-  return results.flatMap((result) => {
+  const games = results.flatMap((result) => {
     if (!isFullPage(result)) return [];
 
     const nameProperty = result.properties["이름"];
@@ -83,5 +83,13 @@ export async function getGameList(): Promise<GameItem[] | null> {
         : undefined;
 
     return [{ id: result.id, name, category, image, review, score }];
+  });
+
+  return games.sort((a, b) => {
+    if (a.score === undefined && b.score === undefined) return 0;
+    if (a.score === undefined) return 1;
+    if (b.score === undefined) return -1;
+
+    return b.score - a.score;
   });
 }
