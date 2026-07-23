@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { css } from "styled-system/css";
 import { flex } from "styled-system/patterns";
 import { Text } from "@/lib/ui/Text";
 import { GameList } from "./_components/GameList";
@@ -24,17 +23,6 @@ export default function GamePage() {
         className={flex({ direction: "column", gap: "3", pt: "6" })}
       >
         <Text
-          as="p"
-          size="xs"
-          css={{
-            color: "neutral.9",
-            fontWeight: "bold",
-            letterSpacing: "0.16em",
-          }}
-        >
-          PLAY LOG
-        </Text>
-        <Text
           as="h1"
           id="game-page-title"
           size="3xl"
@@ -54,16 +42,6 @@ export default function GamePage() {
           엔딩을 본 게임부터 오래 기억하고 싶은 순간까지, 직접 플레이한
           게임과 짧은 감상을 기록합니다.
         </Text>
-        <div
-          aria-hidden="true"
-          className={css({
-            mt: "3",
-            w: "12",
-            h: "1",
-            bg: "neutral.12",
-            borderRadius: "full",
-          })}
-        />
       </section>
 
       <GameList />

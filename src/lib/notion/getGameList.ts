@@ -1,8 +1,4 @@
-import {
-  APIErrorCode,
-  isFullPage,
-  isNotionClientError,
-} from "@notionhq/client";
+import { isFullPage } from "@notionhq/client";
 import type { GameCategory, GameItem } from "../types/Game";
 import { notion } from "./notion";
 
@@ -12,36 +8,24 @@ const GAME_DATABASE_ID =
 
 const GAME_CATEGORIES = new Set<GameCategory>(["PC", "닌텐도", "플스"]);
 
-export async function getGameList(): Promise<GameItem[] | null> {
+export async function getGameList(): Promise<GameItem[]> {
   const results: Awaited<
     ReturnType<typeof notion.databases.query>
   >["results"] = [];
   let startCursor: string | undefined;
 
-  try {
-    do {
-      const response = await notion.databases.query({
-        database_id: GAME_DATABASE_ID,
-        sorts: [{ timestamp: "created_time", direction: "descending" }],
-        start_cursor: startCursor,
-      });
+  do {
+    const response = await notion.databases.query({
+      database_id: GAME_DATABASE_ID,
+      sorts: [{ timestamp: "created_time", direction: "descending" }],
+      start_cursor: startCursor,
+    });
 
-      results.push(...response.results);
-      startCursor = response.has_more
-        ? (response.next_cursor ?? undefined)
-        : undefined;
-    } while (startCursor);
-  } catch (error) {
-    if (
-      isNotionClientError(error) &&
-      (error.code === APIErrorCode.ObjectNotFound ||
-        error.code === APIErrorCode.RestrictedResource)
-    ) {
-      return null;
-    }
-
-    throw error;
-  }
+    results.push(...response.results);
+    startCursor = response.has_more
+      ? (response.next_cursor ?? undefined)
+      : undefined;
+  } while (startCursor);
 
   const games = results.flatMap((result) => {
     if (!isFullPage(result)) return [];

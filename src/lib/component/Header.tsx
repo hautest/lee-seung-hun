@@ -6,9 +6,9 @@ import { usePathname } from "next/navigation";
 import { styled } from "styled-system/jsx";
 import { flex } from "styled-system/patterns";
 
-const ABOUT_URL = "/about";
-const RESUME_URL = "/resume";
-const BLOG_URL = "/blog";
+const ABOUT_URL = "/about" as Route;
+const RESUME_URL = "/resume" as Route;
+const BLOG_URL = "/blog" as Route;
 const GAME_URL = "/game" as Route;
 
 export function Header() {
