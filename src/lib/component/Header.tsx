@@ -1,13 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import type { Route } from "next";
 import { usePathname } from "next/navigation";
 import { styled } from "styled-system/jsx";
 import { flex } from "styled-system/patterns";
 
-const ABOUT_URL = "/about";
-const RESUME_URL = "/resume";
-const BLOG_URL = "/blog";
+const ABOUT_URL = "/about" as Route;
+const RESUME_URL = "/resume" as Route;
+const BLOG_URL = "/blog" as Route;
+const GAME_URL = "/game" as Route;
 
 export function Header() {
   const pathname = usePathname();
@@ -28,12 +30,18 @@ export function Header() {
         maxW: "1000px",
         backgroundColor: "neutral.1",
         zIndex: 100,
+        mobileDown: {
+          paddingX: "2",
+        },
       })}
     >
       <StyledLink href="/">Seung Hun</StyledLink>
       <nav
         className={flex({
           gap: "2",
+          mobileDown: {
+            gap: "0.5",
+          },
         })}
       >
         <StyledLink
@@ -60,6 +68,14 @@ export function Header() {
         >
           Blog
         </StyledLink>
+        <StyledLink
+          replace
+          aria-current={isMatchUrl(GAME_URL) ? "page" : undefined}
+          currentUrl={isMatchUrl(GAME_URL)}
+          href={GAME_URL}
+        >
+          Game
+        </StyledLink>
       </nav>
     </header>
   );
@@ -81,6 +97,11 @@ const StyledLink = styled(Link, {
     },
     p: "2",
     fontWeight: "bold",
+    whiteSpace: "nowrap",
+    mobileDown: {
+      p: "1.5",
+      fontSize: "sm",
+    },
   },
   variants: {
     currentUrl: {
