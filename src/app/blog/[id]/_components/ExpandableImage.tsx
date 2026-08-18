@@ -12,6 +12,9 @@ const IMAGE_SIZE = {
 
 const DIALOG_MAX_WIDTH = 900;
 
+// 세로로 긴 이미지가 화면을 통째로 차지하지 않게 막는다. 원본은 확대해서 본다.
+const IMAGE_MAX_HEIGHT = "60vh";
+
 interface ExpandableImageProps {
   src?: string;
   alt: string;
@@ -24,8 +27,10 @@ export function ExpandableImage({ src, alt, blockId }: ExpandableImageProps) {
       <Dialog.Trigger
         css={{
           display: "block",
-          width: "full",
+          width: "fit-content",
+          maxW: "full",
           marginY: "6",
+          marginX: "auto",
           borderRadius: "md",
           borderWidth: "1px",
           borderColor: "neutral.6",
@@ -36,8 +41,12 @@ export function ExpandableImage({ src, alt, blockId }: ExpandableImageProps) {
         <Image
           className={css({
             display: "block",
-            width: "100%",
+            // 원본보다 크게 늘리면 깨지므로 auto로 두고 위아래 한계만 잡는다.
+            width: "auto",
             height: "auto",
+            aspectRatio: "auto",
+            maxW: "full",
+            maxH: IMAGE_MAX_HEIGHT,
           })}
           alt={alt || ""}
           src={createNotionImageUrl({

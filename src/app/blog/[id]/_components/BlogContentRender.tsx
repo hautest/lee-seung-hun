@@ -11,7 +11,7 @@ import { Table } from "@/lib/ui/table";
 
 const SPACE_SIGNAL = "::$SPACE";
 
-const SHIKI_THEME = "vitesse-light";
+const SHIKI_THEME = "github-light";
 
 // react-markdown이 unified를 동기로 돌리기 때문에 문법을 미리 다 올려둬야 한다.
 // 여기 없는 언어는 fallbackLanguage로 떨어지므로, 새 언어를 쓰면 추가할 것.
