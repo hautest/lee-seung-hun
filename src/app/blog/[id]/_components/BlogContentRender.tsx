@@ -11,14 +11,6 @@ import { containsImage, readCodeBlock } from "./utils/markdownNode";
 
 const SPACE_SIGNAL = "::$SPACE";
 
-// 위 여백을 아래보다 크게 둬서 제목이 바로 아래 본문과 한 덩어리로 읽히게 한다.
-const HEADING_GAP = {
-  h1: { marginBottom: "3" },
-  h2: { marginTop: "14", marginBottom: "4" },
-  h3: { marginTop: "10", marginBottom: "3" },
-  h4: { marginTop: "8", marginBottom: "2" },
-} as const;
-
 // 한글은 단어 단위로 줄바꿈해야 읽기 편하다. 긴 URL 같은 토큰은 예외로 잘라준다.
 const KOREAN_TEXT = {
   lineHeight: "1.85",
@@ -35,20 +27,6 @@ const LIST_STYLE = {
   "& ul, & ol": { marginY: "2" },
 } as const;
 
-// 인라인 코드. 코드 블록 안의 <code>는 shiki가 칠해 두므로 건드리면 안 된다.
-const INLINE_CODE = {
-  "& :not(pre) > code": {
-    fontFamily: "mono",
-    fontSize: "0.875em",
-    backgroundColor: "neutral.4",
-    color: "neutral.12",
-    paddingX: "1.5",
-    paddingY: "0.5",
-    borderRadius: "sm",
-    overflowWrap: "break-word",
-  },
-} as const;
-
 interface BlogContentRenderProps {
   content: string;
 }
@@ -60,7 +38,17 @@ export async function BlogContentRender({ content }: BlogContentRenderProps) {
     <div
       className={css({
         "& > *:first-child": { marginTop: "0" },
-        ...INLINE_CODE,
+        // 코드 블록 안의 <code>는 shiki가 칠해 두므로 건드리면 안 된다.
+        "& :not(pre) > code": {
+          fontFamily: "mono",
+          fontSize: "0.875em",
+          backgroundColor: "neutral.4",
+          color: "neutral.12",
+          paddingX: "1.5",
+          paddingY: "0.5",
+          borderRadius: "sm",
+          overflowWrap: "break-word",
+        },
       })}
     >
       <Markdown
@@ -72,7 +60,7 @@ export async function BlogContentRender({ content }: BlogContentRenderProps) {
                 fontWeight: "bold",
                 letterSpacing: "tight",
                 lineHeight: "1.35",
-                ...HEADING_GAP.h1,
+                marginBottom: "3",
               }}
               size="4xl"
             >
@@ -88,7 +76,8 @@ export async function BlogContentRender({ content }: BlogContentRenderProps) {
                 paddingBottom: "2",
                 borderBottomWidth: "1px",
                 borderBottomColor: "neutral.6",
-                ...HEADING_GAP.h2,
+                marginTop: "14",
+                marginBottom: "4",
               }}
               size="2xl"
             >
@@ -98,7 +87,12 @@ export async function BlogContentRender({ content }: BlogContentRenderProps) {
           h3: ({ children }) => (
             <Text
               as="h3"
-              css={{ fontWeight: "bold", lineHeight: "1.4", ...HEADING_GAP.h3 }}
+              css={{
+                fontWeight: "bold",
+                lineHeight: "1.4",
+                marginTop: "10",
+                marginBottom: "3",
+              }}
               size="xl"
             >
               {children}
@@ -107,7 +101,7 @@ export async function BlogContentRender({ content }: BlogContentRenderProps) {
           h4: ({ children }) => (
             <Text
               as="h4"
-              css={{ fontWeight: "bold", ...HEADING_GAP.h4 }}
+              css={{ fontWeight: "bold", marginTop: "8", marginBottom: "2" }}
               size="lg"
             >
               {children}
@@ -119,7 +113,8 @@ export async function BlogContentRender({ content }: BlogContentRenderProps) {
               css={{
                 fontWeight: "bold",
                 color: "neutral.11",
-                ...HEADING_GAP.h4,
+                marginTop: "8",
+                marginBottom: "2",
               }}
               size="md"
             >

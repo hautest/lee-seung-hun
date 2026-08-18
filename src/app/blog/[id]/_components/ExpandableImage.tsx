@@ -74,9 +74,6 @@ export function ExpandableImage({ src, alt, blockId }: ExpandableImageProps) {
               top: "2",
               right: "2",
               padding: "1",
-              borderRadius: "full",
-              backgroundColor: "neutral.1",
-              boxShadow: "sm",
             }}
           >
             <X

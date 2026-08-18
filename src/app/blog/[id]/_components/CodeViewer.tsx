@@ -1,6 +1,6 @@
 "use client";
 
-import { css, cx } from "styled-system/css";
+import { css, cva } from "styled-system/css";
 import { Copy, Check } from "lucide-react";
 import { Button } from "@/lib/ui/Button";
 import { ReactNode, useState } from "react";
@@ -52,16 +52,37 @@ function CopyButton({ content }: CopyButtonProps) {
   );
 }
 
-const lineNumbers = css({
-  "& code": { counterReset: "line" },
-  "& .line::before": {
-    counterIncrement: "line",
-    content: "counter(line)",
-    display: "inline-block",
-    width: "2ch",
-    marginRight: "4",
-    textAlign: "right",
-    color: "neutral.9",
+const codeBlock = cva({
+  base: {
+    marginY: "6",
+    borderWidth: "1px",
+    borderColor: "neutral.6",
+    borderRadius: "md",
+    overflow: "hidden",
+    bg: "neutral.2",
+    "& pre": {
+      overflowX: "auto",
+      paddingX: "4",
+      paddingY: "3",
+      fontSize: "sm",
+      lineHeight: "1.7",
+    },
+  },
+  variants: {
+    lineNumbers: {
+      true: {
+        "& code": { counterReset: "line" },
+        "& .line::before": {
+          counterIncrement: "line",
+          content: "counter(line)",
+          display: "inline-block",
+          width: "2ch",
+          marginRight: "4",
+          textAlign: "right",
+          color: "neutral.9",
+        },
+      },
+    },
   },
 });
 
@@ -78,26 +99,7 @@ export function CodeViewer({ children, raw, language }: CodeViewerProps) {
     : normalizedLanguage;
 
   return (
-    <figure
-      className={cx(
-        css({
-          marginY: "6",
-          borderWidth: "1px",
-          borderColor: "neutral.6",
-          borderRadius: "md",
-          overflow: "hidden",
-          bg: "neutral.2",
-          "& pre": {
-            overflowX: "auto",
-            paddingX: "4",
-            paddingY: "3",
-            fontSize: "sm",
-            lineHeight: "1.7",
-          },
-        }),
-        raw.includes("\n") && lineNumbers,
-      )}
-    >
+    <figure className={codeBlock({ lineNumbers: raw.includes("\n") })}>
       <figcaption
         className={css({
           display: "flex",
