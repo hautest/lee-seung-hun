@@ -1,45 +1,18 @@
 "use client";
 
-import { javascript } from "@codemirror/lang-javascript";
-import ReactCodeMirror from "@uiw/react-codemirror";
-import { githubLight } from "@uiw/codemirror-theme-github";
-import { css } from "styled-system/css";
+import { css, cx } from "styled-system/css";
 import { Copy, Check } from "lucide-react";
 import { Button } from "@/lib/ui/Button";
-import { PropsWithChildren, useState } from "react";
-
-// CodeMirror에 문법 확장이 있는 언어만. 나머지는 하이라이팅 없이 평문으로 보여준다.
-const JS_LANGUAGES = new Set([
-  "js",
-  "jsx",
-  "ts",
-  "tsx",
-  "javascript",
-  "typescript",
-]);
+import { ReactNode, useState } from "react";
 
 // 노션이 언어를 지정하지 않은 코드 블록에 붙이는 값. 라벨로 보여줄 게 없다.
 const UNLABELED_LANGUAGES = new Set([
   "plain",
   "plain text",
-  "text",
   "plaintext",
+  "text",
+  "txt",
 ]);
-
-const Skeleton = ({ children }: PropsWithChildren) => {
-  return (
-    <div
-      className={css({
-        fontSize: "13px",
-        lineHeight: "18.2px",
-        paddingBottom: "22.2px",
-        paddingTop: "4px",
-      })}
-    >
-      {children}
-    </div>
-  );
-};
 
 interface CopyButtonProps {
   content: string;
@@ -79,33 +52,53 @@ function CopyButton({ content }: CopyButtonProps) {
   );
 }
 
+// 줄 번호는 shiki가 각 줄에 붙여주는 .line 스팬을 CSS 카운터로 세어서 그린다.
+const lineNumbers = css({
+  "& code": { counterReset: "line" },
+  "& .line::before": {
+    counterIncrement: "line",
+    content: "counter(line)",
+    display: "inline-block",
+    width: "2ch",
+    marginRight: "4",
+    textAlign: "right",
+    color: "neutral.9",
+  },
+});
+
 interface CodeViewerProps {
-  children: string;
+  /** shiki가 빌드 타임에 하이라이팅해 둔 <pre>. */
+  children: ReactNode;
+  /** 복사 버튼에 넘길 원문. */
+  raw: string;
   language?: string;
 }
 
-export function CodeViewer({ children, language }: CodeViewerProps) {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  const isMultiline = children.includes("\n");
+export function CodeViewer({ children, raw, language }: CodeViewerProps) {
   const normalizedLanguage = language?.toLowerCase() ?? "";
-  const extensions = JS_LANGUAGES.has(normalizedLanguage)
-    ? [javascript({ jsx: true, typescript: true })]
-    : [];
   const label = UNLABELED_LANGUAGES.has(normalizedLanguage)
     ? ""
     : normalizedLanguage;
 
   return (
     <figure
-      className={css({
-        marginY: "6",
-        borderWidth: "1px",
-        borderColor: "neutral.6",
-        borderRadius: "md",
-        overflow: "hidden",
-        bg: "neutral.1",
-      })}
+      className={cx(
+        css({
+          marginY: "6",
+          borderWidth: "1px",
+          borderColor: "neutral.6",
+          borderRadius: "md",
+          overflow: "hidden",
+          "& pre": {
+            overflowX: "auto",
+            paddingX: "4",
+            paddingY: "3",
+            fontSize: "sm",
+            lineHeight: "1.7",
+          },
+        }),
+        raw.includes("\n") && lineNumbers,
+      )}
     >
       <figcaption
         className={css({
@@ -129,24 +122,9 @@ export function CodeViewer({ children, language }: CodeViewerProps) {
         >
           {label}
         </span>
-        <CopyButton content={children} />
+        <CopyButton content={raw} />
       </figcaption>
-      <div className={css({ px: "1", py: "2" })}>
-        {!isLoaded && <Skeleton>{children}</Skeleton>}
-        <ReactCodeMirror
-          onCreateEditor={() => setIsLoaded(true)}
-          basicSetup={{
-            foldGutter: false,
-            lineNumbers: isMultiline,
-            highlightActiveLine: false,
-            highlightActiveLineGutter: false,
-          }}
-          editable={false}
-          extensions={extensions}
-          theme={githubLight}
-          value={children}
-        />
-      </div>
+      {children}
     </figure>
   );
 }

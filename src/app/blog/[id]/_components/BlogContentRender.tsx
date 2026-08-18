@@ -1,7 +1,8 @@
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkCjkFriendly from "remark-cjk-friendly";
-import { Children, isValidElement, type ReactElement } from "react";
+import rehypeShikiFromHighlighter from "@shikijs/rehype/core";
+import { createHighlighter, type Highlighter } from "shiki";
 import { css } from "styled-system/css";
 import { Text } from "@/lib/ui/Text";
 import { CodeViewer } from "./CodeViewer";
@@ -9,6 +10,44 @@ import { ExpandableImage } from "./ExpandableImage";
 import { Table } from "@/lib/ui/table";
 
 const SPACE_SIGNAL = "::$SPACE";
+
+const SHIKI_THEME = "vitesse-light";
+
+// react-markdown이 unified를 동기로 돌리기 때문에 문법을 미리 다 올려둬야 한다.
+// 여기 없는 언어는 fallbackLanguage로 떨어지므로, 새 언어를 쓰면 추가할 것.
+const SHIKI_LANGUAGES = [
+  "typescript",
+  "tsx",
+  "javascript",
+  "jsx",
+  "shellscript",
+  "markdown",
+  "json",
+  "css",
+  "html",
+  "yaml",
+  "diff",
+];
+
+const SHIKI_OPTIONS = {
+  theme: SHIKI_THEME,
+  // 노션이 언어를 지정하지 않은 블록과, 위 목록에 없는 언어를 모두 평문으로 떨어뜨린다.
+  defaultLanguage: "text",
+  fallbackLanguage: "text",
+  addLanguageClass: true,
+};
+
+let highlighter: Promise<Highlighter> | undefined;
+
+// 페이지마다 문법을 다시 파싱하지 않도록 하이라이터를 모듈 단위로 재사용한다.
+function getHighlighter() {
+  highlighter ??= createHighlighter({
+    themes: [SHIKI_THEME],
+    langs: SHIKI_LANGUAGES,
+  });
+
+  return highlighter;
+}
 
 // 제목은 위쪽 여백을 크게 줘서 바로 아래 본문과 한 덩어리로 읽히게 한다.
 const HEADING_GAP = {
@@ -34,7 +73,42 @@ const LIST_STYLE = {
   "& ul, & ol": { marginY: "2" },
 } as const;
 
-type MarkdownNode = { children?: { type: string; tagName?: string }[] };
+// 인라인 코드. 코드 블록 안의 <code>는 shiki가 칠해 두므로 건드리면 안 된다.
+const INLINE_CODE = {
+  "& :not(pre) > code": {
+    fontFamily: "mono",
+    fontSize: "0.875em",
+    backgroundColor: "neutral.4",
+    color: "neutral.12",
+    paddingX: "1.5",
+    paddingY: "0.5",
+    borderRadius: "sm",
+    overflowWrap: "break-word",
+  },
+} as const;
+
+type MarkdownNode = {
+  type?: string;
+  value?: string;
+  tagName?: string;
+  properties?: { class?: unknown; className?: unknown };
+  children?: MarkdownNode[];
+};
+
+const LANGUAGE_CLASS_PREFIX = "language-";
+
+// shiki의 addLanguageClass는 <pre>가 아니라 안쪽 <code>에 클래스를 붙인다.
+// 이때 hast가 정규화한 className이 아니라 raw `class` 속성으로 들어온다.
+function findLanguage(node?: MarkdownNode) {
+  const { class: rawClass, className } = node?.children?.[0]?.properties ?? {};
+  const names = [rawClass, className].flatMap((value) =>
+    Array.isArray(value) ? value.map(String) : [],
+  );
+
+  return names
+    .find((name) => name.startsWith(LANGUAGE_CLASS_PREFIX))
+    ?.slice(LANGUAGE_CLASS_PREFIX.length);
+}
 
 function containsImage(node?: MarkdownNode) {
   return node?.children?.some(
@@ -42,15 +116,27 @@ function containsImage(node?: MarkdownNode) {
   );
 }
 
+function toPlainText(node?: MarkdownNode): string {
+  if (!node) return "";
+  if (node.type === "text") return node.value ?? "";
+
+  return (node.children ?? []).map(toPlainText).join("");
+}
+
 interface BlogContentRenderProps {
   content: string;
 }
 
 export async function BlogContentRender({ content }: BlogContentRenderProps) {
+  const shiki = await getHighlighter();
+
   return (
     <div
-      // 글의 첫 제목은 위 여백이 필요 없다.
-      className={css({ "& > *:first-child": { marginTop: "0" } })}
+      className={css({
+        // 글의 첫 제목은 위 여백이 필요 없다.
+        "& > *:first-child": { marginTop: "0" },
+        ...INLINE_CODE,
+      })}
     >
       <Markdown
         components={{
@@ -186,39 +272,17 @@ export async function BlogContentRender({ content }: BlogContentRenderProps) {
               </Text>
             );
           },
-          pre: ({ children }) => {
-            const codeElement = Children.toArray(children).find(
-              isValidElement,
-            ) as
-              | ReactElement<{ children?: unknown; className?: string }>
-              | undefined;
+          // shiki가 빌드 타임에 하이라이팅해 둔 <pre>를 그대로 두고 껍데기만 씌운다.
+          pre: ({ children, node, ...props }) => {
+            const language = findLanguage(node);
+            const raw = toPlainText(node).replace(/\n+$/, "");
 
-            const value = String(codeElement?.props.children ?? "").replace(
-              /\n+$/,
-              "",
+            return (
+              <CodeViewer language={language} raw={raw}>
+                <pre {...props}>{children}</pre>
+              </CodeViewer>
             );
-            const language = /language-(\S+)/.exec(
-              codeElement?.props.className ?? "",
-            )?.[1];
-
-            return <CodeViewer language={language}>{value}</CodeViewer>;
           },
-          code: ({ children }) => (
-            <code
-              className={css({
-                fontFamily: "mono",
-                fontSize: "0.875em",
-                backgroundColor: "neutral.4",
-                color: "neutral.12",
-                paddingX: "1.5",
-                paddingY: "0.5",
-                borderRadius: "sm",
-                overflowWrap: "break-word",
-              })}
-            >
-              {children}
-            </code>
-          ),
           strong: ({ children }) => (
             <Text css={{ fontWeight: "bold" }} as="strong">
               {children}
@@ -291,6 +355,7 @@ export async function BlogContentRender({ content }: BlogContentRenderProps) {
           ),
         }}
         remarkPlugins={[remarkGfm, remarkCjkFriendly]}
+        rehypePlugins={[[rehypeShikiFromHighlighter, shiki, SHIKI_OPTIONS]]}
       >
         {content}
       </Markdown>
