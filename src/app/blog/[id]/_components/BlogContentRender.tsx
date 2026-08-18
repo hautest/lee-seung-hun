@@ -2,7 +2,11 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkCjkFriendly from "remark-cjk-friendly";
 import rehypeShikiFromHighlighter from "@shikijs/rehype/core";
-import { createHighlighter, type Highlighter } from "shiki";
+import {
+  createHighlighter,
+  type Highlighter,
+  type ShikiTransformer,
+} from "shiki";
 import { css } from "styled-system/css";
 import { Text } from "@/lib/ui/Text";
 import { CodeViewer } from "./CodeViewer";
@@ -29,8 +33,21 @@ const SHIKI_LANGUAGES = [
   "diff",
 ];
 
+// shiki는 <pre>에 테마 배경색을 인라인으로 박는다. 인라인이라 CSS로 못 덮으므로
+// 걷어내고 코드 영역 배경은 디자인 토큰으로 다룬다.
+const removeInlineBackground: ShikiTransformer = {
+  name: "remove-inline-background",
+  pre(node) {
+    node.properties.style = String(node.properties.style ?? "").replace(
+      /background-color:[^;]*;?/,
+      "",
+    );
+  },
+};
+
 const SHIKI_OPTIONS = {
   theme: SHIKI_THEME,
+  transformers: [removeInlineBackground],
   // 노션이 언어를 지정하지 않은 블록과, 위 목록에 없는 언어를 모두 평문으로 떨어뜨린다.
   defaultLanguage: "text",
   fallbackLanguage: "text",

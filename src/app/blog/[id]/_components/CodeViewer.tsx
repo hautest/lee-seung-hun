@@ -89,6 +89,8 @@ export function CodeViewer({ children, raw, language }: CodeViewerProps) {
           borderColor: "neutral.6",
           borderRadius: "md",
           overflow: "hidden",
+          // shiki의 인라인 배경을 걷어냈으므로 코드 영역 배경은 여기서 정한다.
+          bg: "neutral.2",
           "& pre": {
             overflowX: "auto",
             paddingX: "4",
