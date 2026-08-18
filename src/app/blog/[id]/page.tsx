@@ -52,7 +52,6 @@ export default async function BlogDetailPage({
       className={flex({
         flexDirection: "column",
         w: "full",
-        paddingTop: "8",
       })}
     >
       {meta.length > 0 && (
