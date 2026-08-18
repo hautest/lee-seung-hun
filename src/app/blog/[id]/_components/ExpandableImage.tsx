@@ -11,6 +11,7 @@ const IMAGE_SIZE = {
 };
 
 const DIALOG_MAX_WIDTH = 900;
+const DIALOG_MAX_HEIGHT = "90vh";
 
 // 세로로 긴 이미지가 화면을 통째로 차지하지 않게 막는다.
 const IMAGE_MAX_HEIGHT = "60vh";
@@ -38,14 +39,10 @@ export function ExpandableImage({ src, alt, blockId }: ExpandableImageProps) {
           cursor: "zoom-in",
         }}
       >
+        {/* width 속성이 CSS width로도 먹어서 auto로 덮지 않으면 원본보다 크게 늘어나 깨진다. */}
         <Image
           className={css({
-            display: "block",
-            // 원본보다 크게 늘리면 깨지므로 auto로 두고 위아래 한계만 잡는다.
             width: "auto",
-            height: "auto",
-            aspectRatio: "auto",
-            maxW: "full",
             maxH: IMAGE_MAX_HEIGHT,
           })}
           alt={alt || ""}
@@ -62,10 +59,10 @@ export function ExpandableImage({ src, alt, blockId }: ExpandableImageProps) {
       <Dialog.Positioner>
         <Dialog.Content
           css={{
-            w: "100%",
+            w: "fit-content",
             maxW: DIALOG_MAX_WIDTH,
             minW: 0,
-            maxH: "90vh",
+            maxH: DIALOG_MAX_HEIGHT,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -91,11 +88,8 @@ export function ExpandableImage({ src, alt, blockId }: ExpandableImageProps) {
           </Dialog.CloseTrigger>
           <Image
             className={css({
-              width: "100%",
-              height: "auto",
-              maxW: "full",
-              maxH: "90vh",
-              objectFit: "contain",
+              width: "auto",
+              maxH: DIALOG_MAX_HEIGHT,
             })}
             alt={alt || ""}
             src={createNotionImageUrl({
