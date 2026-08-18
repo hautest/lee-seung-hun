@@ -18,8 +18,6 @@ export default function HomePage() {
         w: "full",
         mobileDown: {
           position: "initial",
-          left: "0",
-          top: "0",
           transform: "translate(0, 0)",
         },
       })}

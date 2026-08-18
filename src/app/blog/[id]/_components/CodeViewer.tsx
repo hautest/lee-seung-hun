@@ -1,27 +1,18 @@
 "use client";
 
-import { javascript } from "@codemirror/lang-javascript";
-import ReactCodeMirror from "@uiw/react-codemirror";
-import { githubLight } from "@uiw/codemirror-theme-github";
-import { css } from "styled-system/css";
+import { css, cva } from "styled-system/css";
 import { Copy, Check } from "lucide-react";
 import { Button } from "@/lib/ui/Button";
-import { PropsWithChildren, useState } from "react";
+import { ReactNode, useState } from "react";
 
-const Skeleton = ({ children }: PropsWithChildren) => {
-  return (
-    <div
-      className={css({
-        fontSize: "13px",
-        lineHeight: "18.2px",
-        paddingBottom: "22.2px",
-        paddingTop: "4px",
-      })}
-    >
-      {children}
-    </div>
-  );
-};
+// 노션이 언어를 지정하지 않은 코드 블록에 붙이는 값. 라벨로 보여줄 게 없다.
+const UNLABELED_LANGUAGES = new Set([
+  "plain",
+  "plain text",
+  "plaintext",
+  "text",
+  "txt",
+]);
 
 interface CopyButtonProps {
   content: string;
@@ -40,42 +31,100 @@ function CopyButton({ content }: CopyButtonProps) {
 
   return (
     <Button
-      css={{ position: "absolute", right: "4", top: "4", zIndex: 2 }}
-      variant="outline"
+      css={{
+        h: "7",
+        minW: "7",
+        px: "2",
+        gap: "1.5",
+        fontSize: "xs",
+        color: "neutral.11",
+        _hover: { color: "neutral.12", bg: "neutral.5" },
+        "& svg": { w: "3.5", h: "3.5" },
+      }}
+      size="xs"
+      variant="ghost"
       onClick={handleCopy}
       aria-label="코드 복사하기"
     >
       {isCopied ? <Check /> : <Copy />}
+      {isCopied ? "복사됨" : "복사"}
     </Button>
   );
 }
 
+const codeBlock = cva({
+  base: {
+    marginY: "6",
+    borderWidth: "1px",
+    borderColor: "neutral.6",
+    borderRadius: "md",
+    overflow: "hidden",
+    bg: "neutral.2",
+    "& pre": {
+      overflowX: "auto",
+      paddingX: "4",
+      paddingY: "3",
+      fontSize: "sm",
+      lineHeight: "1.7",
+    },
+  },
+  variants: {
+    lineNumbers: {
+      true: {
+        "& code": { counterReset: "line" },
+        "& .line::before": {
+          counterIncrement: "line",
+          content: "counter(line)",
+          display: "inline-block",
+          width: "2ch",
+          marginRight: "4",
+          textAlign: "right",
+          color: "neutral.9",
+        },
+      },
+    },
+  },
+});
+
 interface CodeViewerProps {
-  children: string;
+  children: ReactNode;
+  raw: string;
+  language?: string;
 }
 
-export function CodeViewer({ children }: CodeViewerProps) {
-  const [isLoaded, setIsLoaded] = useState(false);
+export function CodeViewer({ children, raw, language }: CodeViewerProps) {
+  const normalizedLanguage = language?.toLowerCase() ?? "";
+  const label = UNLABELED_LANGUAGES.has(normalizedLanguage)
+    ? ""
+    : normalizedLanguage;
 
   return (
-    <div className={css({ position: "relative", marginY: "4" })}>
-      <CopyButton content={children} />
-      {!isLoaded && <Skeleton>{children}</Skeleton>}
-      <ReactCodeMirror
-        onCreateEditor={() => setIsLoaded(true)}
-        basicSetup={{
-          foldGutter: false,
-        }}
-        editable={false}
-        extensions={[
-          javascript({
-            jsx: true,
-            typescript: true,
-          }),
-        ]}
-        theme={githubLight}
-        value={children}
-      />
-    </div>
+    <figure className={codeBlock({ lineNumbers: raw.includes("\n") })}>
+      <figcaption
+        className={css({
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          h: "9",
+          pl: "3",
+          pr: "1.5",
+          bg: "neutral.3",
+          borderBottomWidth: "1px",
+          borderBottomColor: "neutral.6",
+        })}
+      >
+        <span
+          className={css({
+            fontFamily: "mono",
+            fontSize: "xs",
+            color: "neutral.10",
+          })}
+        >
+          {label}
+        </span>
+        <CopyButton content={raw} />
+      </figcaption>
+      {children}
+    </figure>
   );
 }

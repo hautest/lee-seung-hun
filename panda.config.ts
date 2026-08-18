@@ -35,14 +35,12 @@ export default defineConfig({
   globalCss: defineGlobalStyles({
     html: {
       width: "full",
-      display: "flex",
-      justifyContent: "center",
       backgroundColor: "neutral.1",
-      overflowY: "auto",
     },
     body: {
       width: "full",
       maxW: "1000px",
+      marginInline: "auto",
       backgroundColor: "neutral.1",
     },
     "*": {

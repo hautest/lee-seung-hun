@@ -36,7 +36,7 @@ export default function RootLayout({
           className={css({
             w: "full",
             h: "full",
-            paddingTop: "14",
+            paddingTop: "8",
             paddingBottom: "safe-bottom",
             px: "4",
           })}

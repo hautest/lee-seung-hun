@@ -8,7 +8,7 @@ import { Text } from "@/lib/ui/Text";
 import { css } from "styled-system/css";
 import dayjs from "dayjs";
 
-const IMAGE_SIZE = 150;
+const IMAGE_SIZE = 120;
 
 function BlogItem({
   publishDate,
@@ -27,33 +27,47 @@ function BlogItem({
       aria-labelledby={titleId}
       aria-describedby={descriptionId}
       className={flex({
-        py: "4",
+        p: "3",
         gap: "4",
         w: "full",
+        borderRadius: "md",
         alignItems: "flex-start",
         _active: {
-          bg: "neutral.5",
+          bg: "neutral.4",
         },
         _hover: {
-          bg: "neutral.5",
+          bg: "neutral.4",
         },
         _focus: {
-          bg: "neutral.5",
+          bg: "neutral.4",
         },
       })}
     >
-      <div className={css({ w: IMAGE_SIZE, h: IMAGE_SIZE, flexShrink: 0 })}>
+      <div
+        className={css({
+          w: IMAGE_SIZE,
+          h: IMAGE_SIZE,
+          flexShrink: 0,
+          overflow: "hidden",
+          borderRadius: "md",
+          borderWidth: "1px",
+          borderColor: "neutral.6",
+          bg: "neutral.3",
+        })}
+      >
         <Image
           src={thumbnail || ""}
           alt={title || ""}
           width={IMAGE_SIZE}
           height={IMAGE_SIZE}
           className={css({
+            w: "full",
+            h: "full",
             objectFit: "contain",
           })}
         />
       </div>
-      <div className={flex({ direction: "column" })}>
+      <div className={flex({ direction: "column", minW: 0 })}>
         <Text
           as="h2"
           css={{ color: "neutral.12", fontWeight: "medium" }}
@@ -66,16 +80,17 @@ function BlogItem({
           as="p"
           css={{
             color: "neutral.11",
-            marginBottom: "4",
-            wordBreak: "break-word",
-            whiteSpace: "normal",
+            marginTop: "1",
+            marginBottom: "3",
+            wordBreak: "keep-all",
+            overflowWrap: "break-word",
           }}
           id={descriptionId}
           size="sm"
         >
           {description}
         </Text>
-        <Text as="p" css={{ color: "neutral.9" }} size="xs">
+        <Text as="p" css={{ color: "neutral.10", marginTop: "auto" }} size="xs">
           {createdTime}
         </Text>
       </div>
@@ -88,7 +103,7 @@ export async function BlogList() {
   const blogList = await getBlogList();
 
   return (
-    <ul className={flex({ w: "full", direction: "column" })}>
+    <ul className={flex({ w: "full", direction: "column", gap: "1" })}>
       {blogList.map((blogItem) => (
         <li key={blogItem?.id} className={flex({ w: "full" })}>
           <BlogItem
@@ -96,7 +111,7 @@ export async function BlogList() {
             thumbnail={createNotionImageUrl({
               fileUrl: blogItem?.thumbnail ?? "",
               id: blogItem?.id ?? "",
-              width: IMAGE_SIZE,
+              width: IMAGE_SIZE * 2,
             })}
           />
         </li>

@@ -24,10 +24,9 @@ export function Header() {
         justify: "space-between",
         paddingY: "2",
         paddingX: "4",
-        position: "fixed",
+        position: "sticky",
         top: 0,
         width: "full",
-        maxW: "1000px",
         backgroundColor: "neutral.1",
         zIndex: 100,
         mobileDown: {
@@ -109,12 +108,6 @@ const StyledLink = styled(Link, {
         textDecoration: "underline",
         textUnderlineOffset: "4px",
       },
-      false: {
-        textDecoration: "none",
-      },
     },
-  },
-  defaultVariants: {
-    currentUrl: false,
   },
 });

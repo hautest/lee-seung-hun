@@ -13,15 +13,16 @@ export function PrevNextBlogs({ prevBlog, nextBlog }: PrevNextBlogsProps) {
   return (
     <div
       className={flex({
-        marginTop: "20",
-        py: "20",
+        marginTop: "16",
+        paddingTop: "10",
+        paddingBottom: "20",
+        borderTopWidth: "1px",
+        borderTopColor: "neutral.6",
         justify: "space-between",
-        align: "center",
         w: "full",
-        gap: "2",
+        gap: "3",
         mobileDown: {
           flexDirection: "column",
-          marginTop: "0",
         },
       })}
     >
@@ -32,10 +33,12 @@ export function PrevNextBlogs({ prevBlog, nextBlog }: PrevNextBlogsProps) {
           })}
           href={`/blog/${prevBlog.id}`}
         >
-          <Text size="sm" css={{ w: "full" }}>
+          <Text size="xs" css={{ w: "full", opacity: 0.7 }}>
             이전글
           </Text>
-          <Text size="lg">{prevBlog.title}</Text>
+          <Text size="md" css={{ fontWeight: "medium" }}>
+            {prevBlog.title}
+          </Text>
         </Link>
       )}
       {nextBlog && (
@@ -45,10 +48,12 @@ export function PrevNextBlogs({ prevBlog, nextBlog }: PrevNextBlogsProps) {
           })}
           href={`/blog/${nextBlog.id}`}
         >
-          <Text size="sm" css={{ w: "full" }}>
+          <Text size="xs" css={{ w: "full", opacity: 0.7 }}>
             다음글
           </Text>
-          <Text size="lg">{nextBlog.title}</Text>
+          <Text size="md" css={{ fontWeight: "medium" }}>
+            {nextBlog.title}
+          </Text>
         </Link>
       )}
     </div>
@@ -70,13 +75,15 @@ const styledLink = cva({
       backgroundColor: "neutral.12",
     },
     p: "4",
-    borderWidth: "1",
+    gap: "1",
+    borderWidth: "1px",
     borderStyle: "solid",
-    borderColor: "neutral.12",
+    borderColor: "neutral.6",
+    borderRadius: "md",
     h: "full",
     w: "full",
     display: "flex",
-    alignItems: "center",
+    alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "column",
     mobileDown: {
@@ -91,22 +98,10 @@ const styledLink = cva({
           marginLeft: "0",
         },
       },
-      false: {
-        marginLeft: "0",
-        mobileDown: {
-          marginLeft: "0",
-        },
-      },
     },
     marginRightHalf: {
       true: {
         marginRight: "50%",
-        mobileDown: {
-          marginRight: "0",
-        },
-      },
-      false: {
-        marginRight: "0",
         mobileDown: {
           marginRight: "0",
         },
