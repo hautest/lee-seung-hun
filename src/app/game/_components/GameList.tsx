@@ -11,7 +11,6 @@ export async function GameList() {
         display: "grid",
         gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
         gap: "6",
-        listStyle: "none",
         mobileDown: { gridTemplateColumns: "minmax(0, 1fr)" },
       })}
     >

@@ -19,7 +19,6 @@ export function PrevNextBlogs({ prevBlog, nextBlog }: PrevNextBlogsProps) {
         borderTopWidth: "1px",
         borderTopColor: "neutral.6",
         justify: "space-between",
-        align: "stretch",
         w: "full",
         gap: "3",
         mobileDown: {
@@ -34,7 +33,7 @@ export function PrevNextBlogs({ prevBlog, nextBlog }: PrevNextBlogsProps) {
           })}
           href={`/blog/${prevBlog.id}`}
         >
-          <Text size="xs" css={{ w: "full", color: "inherit", opacity: 0.7 }}>
+          <Text size="xs" css={{ w: "full", opacity: 0.7 }}>
             이전글
           </Text>
           <Text size="md" css={{ fontWeight: "medium" }}>
@@ -49,7 +48,7 @@ export function PrevNextBlogs({ prevBlog, nextBlog }: PrevNextBlogsProps) {
           })}
           href={`/blog/${nextBlog.id}`}
         >
-          <Text size="xs" css={{ w: "full", color: "inherit", opacity: 0.7 }}>
+          <Text size="xs" css={{ w: "full", opacity: 0.7 }}>
             다음글
           </Text>
           <Text size="md" css={{ fontWeight: "medium" }}>
@@ -99,22 +98,10 @@ const styledLink = cva({
           marginLeft: "0",
         },
       },
-      false: {
-        marginLeft: "0",
-        mobileDown: {
-          marginLeft: "0",
-        },
-      },
     },
     marginRightHalf: {
       true: {
         marginRight: "50%",
-        mobileDown: {
-          marginRight: "0",
-        },
-      },
-      false: {
-        marginRight: "0",
         mobileDown: {
           marginRight: "0",
         },

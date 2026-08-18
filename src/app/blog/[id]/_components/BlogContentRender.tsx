@@ -1,73 +1,19 @@
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkCjkFriendly from "remark-cjk-friendly";
-import rehypeShikiFromHighlighter from "@shikijs/rehype/core";
-import {
-  createHighlighter,
-  type Highlighter,
-  type ShikiTransformer,
-} from "shiki";
 import { css } from "styled-system/css";
 import { Text } from "@/lib/ui/Text";
 import { CodeViewer } from "./CodeViewer";
 import { ExpandableImage } from "./ExpandableImage";
 import { Table } from "@/lib/ui/table";
+import { createRehypePlugins } from "./utils/shiki";
+import { containsImage, readCodeBlock } from "./utils/markdownNode";
 
 const SPACE_SIGNAL = "::$SPACE";
 
-const SHIKI_THEME = "github-light";
-
-// react-markdown이 unified를 동기로 돌리기 때문에 문법을 미리 다 올려둬야 한다.
-// 여기 없는 언어는 fallbackLanguage로 떨어지므로, 새 언어를 쓰면 추가할 것.
-const SHIKI_LANGUAGES = [
-  "typescript",
-  "tsx",
-  "javascript",
-  "jsx",
-  "shellscript",
-  "markdown",
-  "json",
-  "css",
-  "html",
-  "yaml",
-  "diff",
-];
-
-// 테마 배경색이 인라인 스타일로 박혀서 CSS로는 덮을 수 없다.
-const removeInlineBackground: ShikiTransformer = {
-  name: "remove-inline-background",
-  pre(node) {
-    node.properties.style = String(node.properties.style ?? "").replace(
-      /background-color:[^;]*;?/,
-      "",
-    );
-  },
-};
-
-const SHIKI_OPTIONS = {
-  theme: SHIKI_THEME,
-  transformers: [removeInlineBackground],
-  // 노션이 언어를 지정하지 않은 블록과, 위 목록에 없는 언어를 모두 평문으로 떨어뜨린다.
-  defaultLanguage: "text",
-  fallbackLanguage: "text",
-  addLanguageClass: true,
-};
-
-let highlighter: Promise<Highlighter> | undefined;
-
-// 페이지마다 문법을 다시 파싱하지 않도록 하이라이터를 모듈 단위로 재사용한다.
-function getHighlighter() {
-  highlighter ??= createHighlighter({
-    themes: [SHIKI_THEME],
-    langs: SHIKI_LANGUAGES,
-  });
-
-  return highlighter;
-}
-
 // 위 여백을 아래보다 크게 둬서 제목이 바로 아래 본문과 한 덩어리로 읽히게 한다.
 const HEADING_GAP = {
-  h1: { marginTop: "0", marginBottom: "3" },
+  h1: { marginBottom: "3" },
   h2: { marginTop: "14", marginBottom: "4" },
   h3: { marginTop: "10", marginBottom: "3" },
   h4: { marginTop: "8", marginBottom: "2" },
@@ -103,48 +49,12 @@ const INLINE_CODE = {
   },
 } as const;
 
-type MarkdownNode = {
-  type?: string;
-  value?: string;
-  tagName?: string;
-  properties?: { class?: unknown; className?: unknown };
-  children?: MarkdownNode[];
-};
-
-const LANGUAGE_CLASS_PREFIX = "language-";
-
-// shiki의 addLanguageClass는 <pre>가 아니라 안쪽 <code>에 클래스를 붙인다.
-// 이때 hast가 정규화한 className이 아니라 raw `class` 속성으로 들어온다.
-function findLanguage(node?: MarkdownNode) {
-  const { class: rawClass, className } = node?.children?.[0]?.properties ?? {};
-  const names = [rawClass, className].flatMap((value) =>
-    Array.isArray(value) ? value.map(String) : [],
-  );
-
-  return names
-    .find((name) => name.startsWith(LANGUAGE_CLASS_PREFIX))
-    ?.slice(LANGUAGE_CLASS_PREFIX.length);
-}
-
-function containsImage(node?: MarkdownNode) {
-  return node?.children?.some(
-    (child) => child.type === "element" && child.tagName === "img",
-  );
-}
-
-function toPlainText(node?: MarkdownNode): string {
-  if (!node) return "";
-  if (node.type === "text") return node.value ?? "";
-
-  return (node.children ?? []).map(toPlainText).join("");
-}
-
 interface BlogContentRenderProps {
   content: string;
 }
 
 export async function BlogContentRender({ content }: BlogContentRenderProps) {
-  const shiki = await getHighlighter();
+  const rehypePlugins = await createRehypePlugins();
 
   return (
     <div
@@ -288,11 +198,10 @@ export async function BlogContentRender({ content }: BlogContentRenderProps) {
             );
           },
           pre: ({ children, node, ...props }) => {
-            const language = findLanguage(node);
-            const raw = toPlainText(node).replace(/\n+$/, "");
+            const { code, language } = readCodeBlock(node);
 
             return (
-              <CodeViewer language={language} raw={raw}>
+              <CodeViewer language={language} raw={code}>
                 <pre {...props}>{children}</pre>
               </CodeViewer>
             );
@@ -369,7 +278,7 @@ export async function BlogContentRender({ content }: BlogContentRenderProps) {
           ),
         }}
         remarkPlugins={[remarkGfm, remarkCjkFriendly]}
-        rehypePlugins={[[rehypeShikiFromHighlighter, shiki, SHIKI_OPTIONS]]}
+        rehypePlugins={rehypePlugins}
       >
         {content}
       </Markdown>

@@ -84,7 +84,6 @@ function BlogItem({
             marginBottom: "3",
             wordBreak: "keep-all",
             overflowWrap: "break-word",
-            whiteSpace: "normal",
           }}
           id={descriptionId}
           size="sm"

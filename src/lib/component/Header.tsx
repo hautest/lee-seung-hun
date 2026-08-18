@@ -108,12 +108,6 @@ const StyledLink = styled(Link, {
         textDecoration: "underline",
         textUnderlineOffset: "4px",
       },
-      false: {
-        textDecoration: "none",
-      },
     },
-  },
-  defaultVariants: {
-    currentUrl: false,
   },
 });
