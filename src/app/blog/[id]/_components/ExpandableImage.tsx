@@ -12,7 +12,7 @@ const IMAGE_SIZE = {
 
 const DIALOG_MAX_WIDTH = 900;
 
-// 세로로 긴 이미지가 화면을 통째로 차지하지 않게 막는다. 원본은 확대해서 본다.
+// 세로로 긴 이미지가 화면을 통째로 차지하지 않게 막는다.
 const IMAGE_MAX_HEIGHT = "60vh";
 
 interface ExpandableImageProps {

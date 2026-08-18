@@ -33,8 +33,6 @@ export default defineConfig({
     },
   },
   globalCss: defineGlobalStyles({
-    // html에 스크롤 컨테이너를 만들면(overflowY) 모달이 body에 거는 스크롤 잠금이
-    // 먹지 않는다. 스크롤은 뷰포트에 맡기고 가운데 정렬은 body margin으로 한다.
     html: {
       width: "full",
       backgroundColor: "neutral.1",

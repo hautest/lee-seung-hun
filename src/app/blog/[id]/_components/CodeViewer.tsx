@@ -52,7 +52,6 @@ function CopyButton({ content }: CopyButtonProps) {
   );
 }
 
-// 줄 번호는 shiki가 각 줄에 붙여주는 .line 스팬을 CSS 카운터로 세어서 그린다.
 const lineNumbers = css({
   "& code": { counterReset: "line" },
   "& .line::before": {
@@ -67,9 +66,7 @@ const lineNumbers = css({
 });
 
 interface CodeViewerProps {
-  /** shiki가 빌드 타임에 하이라이팅해 둔 <pre>. */
   children: ReactNode;
-  /** 복사 버튼에 넘길 원문. */
   raw: string;
   language?: string;
 }
@@ -89,7 +86,6 @@ export function CodeViewer({ children, raw, language }: CodeViewerProps) {
           borderColor: "neutral.6",
           borderRadius: "md",
           overflow: "hidden",
-          // shiki의 인라인 배경을 걷어냈으므로 코드 영역 배경은 여기서 정한다.
           bg: "neutral.2",
           "& pre": {
             overflowX: "auto",

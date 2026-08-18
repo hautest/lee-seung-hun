@@ -33,8 +33,7 @@ const SHIKI_LANGUAGES = [
   "diff",
 ];
 
-// shiki는 <pre>에 테마 배경색을 인라인으로 박는다. 인라인이라 CSS로 못 덮으므로
-// 걷어내고 코드 영역 배경은 디자인 토큰으로 다룬다.
+// 테마 배경색이 인라인 스타일로 박혀서 CSS로는 덮을 수 없다.
 const removeInlineBackground: ShikiTransformer = {
   name: "remove-inline-background",
   pre(node) {
@@ -66,7 +65,7 @@ function getHighlighter() {
   return highlighter;
 }
 
-// 제목은 위쪽 여백을 크게 줘서 바로 아래 본문과 한 덩어리로 읽히게 한다.
+// 위 여백을 아래보다 크게 둬서 제목이 바로 아래 본문과 한 덩어리로 읽히게 한다.
 const HEADING_GAP = {
   h1: { marginTop: "0", marginBottom: "3" },
   h2: { marginTop: "14", marginBottom: "4" },
@@ -150,7 +149,6 @@ export async function BlogContentRender({ content }: BlogContentRenderProps) {
   return (
     <div
       className={css({
-        // 글의 첫 제목은 위 여백이 필요 없다.
         "& > *:first-child": { marginTop: "0" },
         ...INLINE_CODE,
       })}
@@ -289,7 +287,6 @@ export async function BlogContentRender({ content }: BlogContentRenderProps) {
               </Text>
             );
           },
-          // shiki가 빌드 타임에 하이라이팅해 둔 <pre>를 그대로 두고 껍데기만 씌운다.
           pre: ({ children, node, ...props }) => {
             const language = findLanguage(node);
             const raw = toPlainText(node).replace(/\n+$/, "");

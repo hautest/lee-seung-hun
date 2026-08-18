@@ -20,8 +20,6 @@ export function Header() {
 
   return (
     <header
-      // fixed로 두면 body 흐름 밖이라, 모달이 스크롤을 잠글 때 넣는
-      // 스크롤바 폭 보정을 받지 못해 헤더만 옆으로 밀린다.
       className={flex({
         justify: "space-between",
         paddingY: "2",
