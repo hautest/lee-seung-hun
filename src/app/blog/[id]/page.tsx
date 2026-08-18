@@ -4,6 +4,8 @@ import { getBlogList } from "@/lib/notion/getBlogList";
 import { getPrevNextBlogs } from "@/lib/notion/getPrevNextBlogs";
 import { PrevNextBlogs } from "./_components/PrevNextBlogs";
 import { flex } from "styled-system/patterns";
+import { Text } from "@/lib/ui/Text";
+import dayjs from "dayjs";
 
 export async function generateStaticParams() {
   const blogList = await getBlogList();
@@ -36,13 +38,30 @@ export default async function BlogDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const { content } = await getBlog(id);
+  const { content, metadata } = await getBlog(id);
   const { prevBlog, nextBlog } = await getPrevNextBlogs(id);
 
+  const meta = [
+    metadata.publishDate &&
+      dayjs(metadata.publishDate).format("YYYY년 M월 D일"),
+    ...metadata.tags,
+  ].filter(Boolean);
+
   return (
-    <div className={flex({ flexDirection: "column" })}>
+    <article
+      className={flex({
+        flexDirection: "column",
+        w: "full",
+        paddingTop: "8",
+      })}
+    >
+      {meta.length > 0 && (
+        <Text as="p" size="sm" css={{ color: "neutral.10", marginBottom: "3" }}>
+          {meta.join(" · ")}
+        </Text>
+      )}
       <BlogContentRender content={content} />
       <PrevNextBlogs prevBlog={prevBlog} nextBlog={nextBlog} />
-    </div>
+    </article>
   );
 }

@@ -28,6 +28,8 @@ export async function getBlog(id: string) {
   const metadata = {
     title: "",
     description: "",
+    publishDate: undefined as string | undefined,
+    tags: [] as string[],
   };
 
   if (isFullPage(page)) {
@@ -38,6 +40,15 @@ export async function getBlog(id: string) {
       metadata.title = page.properties.title.title[0].plain_text;
       metadata.description =
         page.properties.description.rich_text[0].plain_text;
+    }
+
+    if (page.properties.publishDate?.type === "date") {
+      metadata.publishDate =
+        page.properties.publishDate.date?.start ?? undefined;
+    }
+
+    if (page.properties.tags?.type === "multi_select") {
+      metadata.tags = page.properties.tags.multi_select.map((tag) => tag.name);
     }
   }
 

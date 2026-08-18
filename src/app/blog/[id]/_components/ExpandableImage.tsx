@@ -4,17 +4,13 @@ import Image from "next/image";
 import { css } from "styled-system/css";
 import { X } from "lucide-react";
 
-const SPACE = {
-  lg: "8",
-  md: "6",
-  sm: "4",
-  xs: "2",
+// 표시 폭보다 크게 받아서 고해상도 화면에서도 흐려지지 않게 한다.
+const IMAGE_SIZE = {
+  unExpanded: 1200,
+  expanded: 1600,
 };
 
-const IMAGE_SIZE = {
-  unExpanded: 600,
-  expanded: 800,
-};
+const DIALOG_MAX_WIDTH = 900;
 
 interface ExpandableImageProps {
   src?: string;
@@ -28,15 +24,20 @@ export function ExpandableImage({ src, alt, blockId }: ExpandableImageProps) {
       <Dialog.Trigger
         css={{
           display: "block",
-          margin: "0 auto",
-          marginBottom: SPACE.sm,
-          cursor: "pointer",
+          width: "full",
+          marginY: "6",
+          borderRadius: "md",
+          borderWidth: "1px",
+          borderColor: "neutral.6",
+          overflow: "hidden",
+          cursor: "zoom-in",
         }}
       >
         <Image
           className={css({
             display: "block",
-            margin: "0 auto",
+            width: "100%",
+            height: "auto",
           })}
           alt={alt || ""}
           src={createNotionImageUrl({
@@ -53,9 +54,9 @@ export function ExpandableImage({ src, alt, blockId }: ExpandableImageProps) {
         <Dialog.Content
           css={{
             w: "100%",
-            maxW: IMAGE_SIZE.expanded,
+            maxW: DIALOG_MAX_WIDTH,
             minW: 0,
-            aspectRatio: "1 / 1",
+            maxH: "90vh",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -64,9 +65,12 @@ export function ExpandableImage({ src, alt, blockId }: ExpandableImageProps) {
           <Dialog.CloseTrigger
             css={{
               position: "absolute",
-              top: "0",
-              right: "0",
+              top: "2",
+              right: "2",
               padding: "1",
+              borderRadius: "full",
+              backgroundColor: "neutral.1",
+              boxShadow: "sm",
             }}
           >
             <X
@@ -78,9 +82,11 @@ export function ExpandableImage({ src, alt, blockId }: ExpandableImageProps) {
           </Dialog.CloseTrigger>
           <Image
             className={css({
-              width: "full",
+              width: "100%",
               height: "auto",
               maxW: "full",
+              maxH: "90vh",
+              objectFit: "contain",
             })}
             alt={alt || ""}
             src={createNotionImageUrl({
