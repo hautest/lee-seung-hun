@@ -63,15 +63,15 @@ export function PrevNextBlogs({ prevBlog, nextBlog }: PrevNextBlogsProps) {
 const styledLink = cva({
   base: {
     _hover: {
-      color: "white",
+      color: "neutral.1",
       backgroundColor: "neutral.12",
     },
     _active: {
-      color: "white",
+      color: "neutral.1",
       backgroundColor: "neutral.12",
     },
     _focus: {
-      color: "white",
+      color: "neutral.1",
       backgroundColor: "neutral.12",
     },
     p: "4",

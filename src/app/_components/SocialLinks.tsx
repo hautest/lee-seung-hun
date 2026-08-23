@@ -22,15 +22,15 @@ function SocialLink({ children, href, ariaLabel }: SocialLinkProps) {
         fontSize: "0",
         p: "1",
         _hover: {
-          color: "white",
+          color: "neutral.1",
           backgroundColor: "neutral.12",
         },
         _active: {
-          color: "white",
+          color: "neutral.1",
           backgroundColor: "neutral.12",
         },
         _focus: {
-          color: "white",
+          color: "neutral.1",
           backgroundColor: "neutral.12",
         },
       })}
