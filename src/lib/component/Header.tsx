@@ -5,6 +5,7 @@ import type { Route } from "next";
 import { usePathname } from "next/navigation";
 import { styled } from "styled-system/jsx";
 import { flex } from "styled-system/patterns";
+import { ThemeToggle } from "./ThemeToggle";
 
 const ABOUT_URL = "/about" as Route;
 const RESUME_URL = "/resume" as Route;
@@ -75,6 +76,7 @@ export function Header() {
         >
           Game
         </StyledLink>
+        <ThemeToggle />
       </nav>
     </header>
   );
@@ -83,15 +85,15 @@ export function Header() {
 const StyledLink = styled(Link, {
   base: {
     _hover: {
-      color: "white",
+      color: "neutral.1",
       backgroundColor: "neutral.12",
     },
     _active: {
-      color: "white",
+      color: "neutral.1",
       backgroundColor: "neutral.12",
     },
     _focus: {
-      color: "white",
+      color: "neutral.1",
       backgroundColor: "neutral.12",
     },
     p: "2",

@@ -36,6 +36,17 @@ export default defineConfig({
     html: {
       width: "full",
       backgroundColor: "neutral.1",
+      colorScheme: "light",
+    },
+    // _dark는 `.dark &`로 확장돼 html 자체에는 매칭되지 않는다.
+    "html.dark": {
+      colorScheme: "dark",
+    },
+    ".shiki, .shiki span": {
+      color: "var(--shiki-light)",
+    },
+    "html.dark .shiki, html.dark .shiki span": {
+      color: "var(--shiki-dark)",
     },
     body: {
       width: "full",
