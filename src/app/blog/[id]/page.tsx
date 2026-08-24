@@ -3,6 +3,7 @@ import { getBlog } from "@/lib/notion/getBlog";
 import { getBlogList } from "@/lib/notion/getBlogList";
 import { getPrevNextBlogs } from "@/lib/notion/getPrevNextBlogs";
 import { PrevNextBlogs } from "./_components/PrevNextBlogs";
+import { Comments } from "./_components/Comments";
 import { flex } from "styled-system/patterns";
 import { Text } from "@/lib/ui/Text";
 import dayjs from "dayjs";
@@ -60,6 +61,7 @@ export default async function BlogDetailPage({
         </Text>
       )}
       <BlogContentRender content={content} />
+      <Comments />
       <PrevNextBlogs prevBlog={prevBlog} nextBlog={nextBlog} />
     </article>
   );
