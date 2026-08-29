@@ -31,7 +31,7 @@ export function Header() {
         backgroundColor: "neutral.1",
         zIndex: 100,
         mobileDown: {
-          paddingX: "2",
+          paddingX: "1",
         },
       })}
     >
@@ -40,7 +40,7 @@ export function Header() {
         className={flex({
           gap: "2",
           mobileDown: {
-            gap: "0.5",
+            gap: 0,
           },
         })}
       >
@@ -100,7 +100,8 @@ const StyledLink = styled(Link, {
     fontWeight: "bold",
     whiteSpace: "nowrap",
     mobileDown: {
-      p: "1.5",
+      py: "1.5",
+      px: "0.5",
       fontSize: "sm",
     },
   },
