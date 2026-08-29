@@ -15,6 +15,7 @@ export default function HomePage() {
         top: "50%",
         transform: "translate(-50%, -50%)",
         gap: "6",
+        paddingTop: "2",
         w: "full",
         mobileDown: {
           position: "initial",
