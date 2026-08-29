@@ -57,8 +57,7 @@ export function ThemeToggle() {
           backgroundColor: "neutral.12",
         },
         mobileDown: {
-          py: "1.5",
-          px: "1",
+          p: "1.5",
         },
       })}
     >
