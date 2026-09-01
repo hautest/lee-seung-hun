@@ -71,6 +71,7 @@ const h1Style = css({
   fontWeight: "800",
   color: "#1a1a2e",
   mb: "1",
+  _print: { breakAfter: "avoid" },
   "&:first-of-type": {
     fontSize: "16px",
     fontWeight: "600",
@@ -91,6 +92,7 @@ const h2Style = css({
   _first: {
     mt: "6",
   },
+  _print: { breakAfter: "avoid" },
 });
 
 const h3Style = css({
@@ -101,6 +103,7 @@ const h3Style = css({
   mb: "2",
   pl: "3",
   borderLeft: "3px solid #6c63ff",
+  _print: { breakAfter: "avoid" },
 });
 
 const h4Style = css({
@@ -109,12 +112,14 @@ const h4Style = css({
   color: "#4a4a6a",
   mt: "5",
   mb: "2",
+  _print: { breakAfter: "avoid" },
 });
 
 const pStyle = css({
   mb: "3",
   color: "#3a3a5c",
   wordBreak: "keep-all",
+  _print: { breakInside: "avoid" },
 });
 
 const ulStyle = css({
@@ -134,6 +139,7 @@ const liStyle = css({
   "& > ul": {
     mt: "1",
   },
+  _print: { breakInside: "avoid" },
 });
 
 const aStyle = css({
