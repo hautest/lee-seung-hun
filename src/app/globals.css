@@ -26,18 +26,6 @@
     padding: 40px 60px !important;
   }
 
-  #resume-content li,
-  #resume-content p {
-    break-inside: avoid;
-  }
-
-  #resume-content h1,
-  #resume-content h2,
-  #resume-content h3,
-  #resume-content h4 {
-    break-after: avoid;
-  }
-
   @page {
     margin: 10mm;
     size: A4;
