@@ -20,6 +20,8 @@
 
 ### 오픈소스
 
+- [rollipop-dev/rollipop](https://github.com/rollipop-dev/rollipop)
+  - [--config로 지정한 함수형 설정 파일의 컨텍스트 누락 오류 수정 및 회귀 테스트 추가](https://github.com/rollipop-dev/rollipop/pull/186)
 - [TanStack/query](https://github.com/TanStack/query)
   - [useSuspenseQueries와 useSuspenseInfiniteQuery에 skipToken 사용 시 에러 메시지 추가](https://github.com/TanStack/query/pull/7797)
 - [toss/es-toolkit](https://github.com/toss/es-toolkit)
@@ -33,8 +35,9 @@
 
 ## 경력
 
-### 주식회사 라프텔 · 사원 · 프론트엔드팀 (정규직)
+### ![](/assets/companies/laftel.png) 주식회사 라프텔
 
+프론트엔드팀 · 사원 · 정규직\
 **2025-01 - 현재 (재직 중)**
 
 #### 웹 성능 최적화
@@ -102,8 +105,9 @@
 
 ---
 
-### (주)펫프렌즈 · 사원 · 가치개발본부 (정규직)
+### ![](/assets/companies/pet-friends.png) (주)펫프렌즈
 
+가치개발본부 · 사원 · 정규직\
 **2023-06 - 2024-12 (퇴사)**
 
 #### 모노레포 전환
@@ -140,8 +144,9 @@
 
 ---
 
-### (주)에바(EVAR) · 사원 · 플랫폼 팀 (정규직)
+### ![](/assets/companies/evar.png) (주)에바(EVAR)
 
+플랫폼 팀 · 사원 · 정규직\
 **2022-09 - 2023-05 (퇴사)**
 
 #### Vue.js → Next.js 마이그레이션
