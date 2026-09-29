@@ -103,6 +103,23 @@ const h3Style = css({
   mb: "2",
   pl: "3",
   borderLeft: "3px solid #6c63ff",
+  "&:has(img)": {
+    display: "flex",
+    alignItems: "center",
+    gap: "2",
+    pl: "0",
+    borderLeft: "none",
+    "& img": {
+      width: "28px",
+      height: "28px",
+      objectFit: "contain",
+      flexShrink: "0",
+    },
+    "& + p": {
+      ml: "36px",
+      fontSize: "14px",
+    },
+  },
   _print: { breakAfter: "avoid" },
 });
 
