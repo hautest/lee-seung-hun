@@ -20,6 +20,10 @@
 
 ### 오픈소스
 
+- [route-stack](https://github.com/hautest/route-stack)
+  - WebView 기반 웹앱에서 네이티브 앱 같은 화면 스택 내비게이션을 제공하는 라이브러리 개발 ([문서](https://hautest.github.io/route-stack/ko/))
+  - 이전 화면 유지, push/back 슬라이드 전환, 엣지·전체 화면 스와이프 백 제스처를 래퍼 컴포넌트 하나로 지원
+  - React Router, TanStack Router, Next.js App Router 지원
 - [rollipop-dev/rollipop](https://github.com/rollipop-dev/rollipop)
   - [--config로 지정한 함수형 설정 파일의 컨텍스트 누락 오류 수정 및 회귀 테스트 추가](https://github.com/rollipop-dev/rollipop/pull/186)
 - [TanStack/query](https://github.com/TanStack/query)
