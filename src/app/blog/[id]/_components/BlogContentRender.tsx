@@ -5,6 +5,9 @@ import { css } from "styled-system/css";
 import { Text } from "@/lib/ui/Text";
 import { CodeViewer } from "./CodeViewer";
 import { ExpandableImage } from "./ExpandableImage";
+import { BlogVideo } from "./BlogVideo";
+import { VIDEO_TITLE } from "@/lib/notion/constants";
+import { createNotionVideoUrl } from "@/lib/notion/createVideoUrl";
 import { Table } from "@/lib/ui/table";
 import { createRehypePlugins } from "./utils/shiki";
 import { containsImage, readCodeBlock } from "./utils/markdownNode";
@@ -163,7 +166,18 @@ export async function BlogContentRender({ content }: BlogContentRenderProps) {
               {children}
             </Text>
           ),
-          img: ({ src, alt: _alt }) => {
+          img: ({ src, alt: _alt, title }) => {
+            if (title === VIDEO_TITLE) {
+              return (
+                <BlogVideo
+                  src={createNotionVideoUrl({
+                    fileUrl: src as string,
+                    id: _alt!,
+                  })}
+                />
+              );
+            }
+
             const [blockId, alt] = _alt!.split(":");
 
             return (

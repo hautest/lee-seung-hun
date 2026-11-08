@@ -1,4 +1,4 @@
-const NOTION_PUBLIC_URL = "https://nimble-monkey-1a1.notion.site";
+import { NOTION_PUBLIC_URL } from "./constants";
 
 interface CreateNotionImageUrlParams {
   fileUrl: string;
