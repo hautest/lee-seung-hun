@@ -1,4 +1,5 @@
-@layer reset, base, tokens, recipes, utilities;
+/* components는 Video.js 스킨 레이어. 스킨 CSS가 먼저 로드돼도 순서가 바뀌지 않게 미리 선언한다. */
+@layer reset, base, tokens, recipes, utilities, components;
 
 @media print {
   header,

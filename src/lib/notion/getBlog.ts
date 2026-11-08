@@ -2,6 +2,7 @@ import { NotionToMarkdown } from "notion-to-md";
 import { notion } from "./notion";
 import { MdBlock } from "notion-to-md/build/types";
 import { isFullPage } from "@notionhq/client";
+import { VIDEO_TITLE } from "./constants";
 
 // notion api 쓸때 expire date가 있어서 배포한 notion에 있는 Image를 가져와야하는데, blockId가 필요해서 임시로 삽입해서 사용
 export function altAddBlockId(str: string, blockId: string): string {
@@ -10,6 +11,15 @@ export function altAddBlockId(str: string, blockId: string): string {
 
 export async function getBlog(id: string) {
   const n2m = new NotionToMarkdown({ notionClient: notion });
+  // 기본 변환은 링크라서, 직접 올린 영상만 이미지 문법으로 바꾸고 title로 영상임을 표시한다.
+  // external(YouTube 등)은 false를 돌려 기본 링크 변환을 쓴다.
+  n2m.setCustomTransformer("video", async (block) => {
+    if (!("video" in block) || block.video.type !== "file") {
+      return false;
+    }
+
+    return `![${block.id}](<${block.video.file.url}> "${VIDEO_TITLE}")`;
+  });
   const mdBlocks = (await (
     await n2m.pageToMarkdown(id)
   ).map((block) => {
